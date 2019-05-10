@@ -68,7 +68,7 @@ pub fn run(config: &ArgsConfig) -> i32 {
         info!("All the coroutines have been spawned.");
     });
 
-    return 0;
+    0
 }
 
 fn run_tester(config: &TesterConfig, portions: &[&[u8]]) {
