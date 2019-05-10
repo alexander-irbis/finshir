@@ -175,12 +175,7 @@ pub struct LoggingConfig {
         takes_value = true,
         value_name = "LEVEL",
         default_value = "3",
-        possible_value = "0",
-        possible_value = "1",
-        possible_value = "2",
-        possible_value = "3",
-        possible_value = "4",
-        possible_value = "5"
+        raw(possible_values = r#"&["0", "1", "2", "3", "4", "5"]"#)
     )]
     pub verbosity: i32,
 
