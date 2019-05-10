@@ -54,33 +54,16 @@ fn setup_ctrlc_handler() {
 
 fn title() {
     println!(
-        "                {}",
-        r"  __ _           _     _      ".cyan()
-    );
-    println!(
-        "                {}",
-        r" / _(_)_ __  ___| |__ (_)_ __ ".cyan()
-    );
-    println!(
-        "                {}",
-        r"| |_| | '_ \/ __| '_ \| | '__|".cyan()
-    );
-    println!(
-        "                {}",
-        r"|  _| | | | \__ \ | | | | |   ".cyan()
-    );
-    println!(
-        "                {}",
-        r"|_| |_|_| |_|___/_| |_|_|_|   ".cyan()
-    );
-    println!(
-        "                         {}",
+        "           {}\n                         {}\n{}",
+        r#"       __ _           _     _
+                 / _(_)_ __  ___| |__ (_)_ __
+                | |_| | '_ \/ __| '_ \| | '__|
+                |  _| | | | \__ \ | | | | |
+                |_| |_|_| |_|___/_| |_|_|_|"#
+            .cyan(),
         format!("version {}", structopt::clap::crate_version!())
             .red()
-            .bold()
-    );
-    println!(
-        "{}\n",
+            .bold(),
         "A coroutines-driven Low & Slow traffic sender, written in Rust"
             .green()
             .underline()
