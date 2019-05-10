@@ -130,7 +130,6 @@ fn send_portion(
                         helpers::cyan(portion.len()),
                         err
                     );
-                    continue;
                 }
             }
         }
@@ -158,7 +157,6 @@ fn connect_socket(config: &SocketConfig) -> MaySocket {
                     "Failed to connect a socket >>> {}! Retrying the operation...",
                     err
                 );
-                continue;
             }
         }
     }
