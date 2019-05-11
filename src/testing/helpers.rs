@@ -53,11 +53,7 @@ fn read_portions<P: AsRef<Path>>(path: P) -> ReadPortionsResult {
 /// Generates empty spaces as default data portions.
 fn gen_portions() -> Vec<Vec<u8>> {
     let mut spaces = Vec::with_capacity(EMPTY_SPACES_COUNT);
-
-    for _ in 0..EMPTY_SPACES_COUNT {
-        spaces.push(vec![' ' as u8]);
-    }
-
+    spaces.resize(EMPTY_SPACES_COUNT, vec![b' ']);
     spaces
 }
 
@@ -96,7 +92,7 @@ mod tests {
 
         for space in spaces {
             assert_eq!(space.len(), 1);
-            assert_eq!(space[0], ' ' as u8);
+            assert_eq!(space[0], b' ');
         }
     }
 

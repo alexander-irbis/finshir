@@ -16,8 +16,6 @@
 //
 // For more information see <https://github.com/Gymmasssorla/finshir>.
 
-use std::error::Error;
-use std::fmt::{self, Display, Formatter};
 use std::net::SocketAddr;
 use std::num::{NonZeroUsize, ParseIntError};
 use std::path::PathBuf;
@@ -175,12 +173,7 @@ pub struct LoggingConfig {
         takes_value = true,
         value_name = "LEVEL",
         default_value = "3",
-        possible_value = "0",
-        possible_value = "1",
-        possible_value = "2",
-        possible_value = "3",
-        possible_value = "4",
-        possible_value = "5"
+        raw(possible_values = r#"&["0", "1", "2", "3", "4", "5"]"#)
     )]
     pub verbosity: i32,
 
@@ -198,32 +191,12 @@ pub struct LoggingConfig {
 
 fn parse_time_format(format: &str) -> Result<String, time::ParseError> {
     // If the `strftime` call succeeds, then the format is correct
-    time::strftime(format, &time::now())?;
-    Ok(String::from(format))
+    time::strftime(format, &time::now()).map(|_| format.to_string())
 }
 
-fn parse_non_zero_usize(number: &str) -> Result<NonZeroUsize, NonZeroUsizeError> {
-    let number: usize = number.parse().map_err(NonZeroUsizeError::InvalidFormat)?;
-
-    NonZeroUsize::new(number).ok_or(NonZeroUsizeError::ZeroValue)
+fn parse_non_zero_usize(number: &str) -> Result<NonZeroUsize, ParseIntError> {
+    number.parse()
 }
-
-#[derive(Debug, Clone, PartialEq, Eq)]
-enum NonZeroUsizeError {
-    InvalidFormat(ParseIntError),
-    ZeroValue,
-}
-
-impl Display for NonZeroUsizeError {
-    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
-        match self {
-            NonZeroUsizeError::InvalidFormat(error) => write!(fmt, "{}", error),
-            NonZeroUsizeError::ZeroValue => write!(fmt, "The value equals to zero"),
-        }
-    }
-}
-
-impl Error for NonZeroUsizeError {}
 
 #[cfg(test)]
 mod tests {
@@ -293,7 +266,5 @@ mod tests {
         check("6485&02hde");
         check("-565642");
         check(&"2178".repeat(50));
-
-        assert_eq!(parse_non_zero_usize("0"), Err(NonZeroUsizeError::ZeroValue));
     }
 }
