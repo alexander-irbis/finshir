@@ -46,8 +46,11 @@ pub struct ArgsConfig {
     )]
     pub wait: Duration,
 
-    /// A file consisting of a custom JSON array of data portions, specified as
-    /// strings
+    /// A file which consists of a custom JSON array of data portions, specified
+    /// as strings.
+    ///
+    /// When a coroutine finished sending all portions, it reconnects its socket
+    /// and starts sending them again.
     #[structopt(
         short = "f",
         long = "portions-file",
