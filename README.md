@@ -125,8 +125,11 @@ OPTIONS:
             Specifies the IP_TTL value for all future sockets. Usually this
             value equals a number of routers that a packet can go through
     -f, --portions-file <LOCATION>
-            A file consisting of a custom JSON array of data portions, specified
-            as strings
+            A file which consists of a custom JSON array of data portions,
+            specified as strings.
+            
+            When a coroutine finished sending all portions, it reconnects its
+            socket and starts sending them again.
     -r, --receiver <SOCKET-ADDRESS>
             A receiver of generator traffic, specified as an IP address and a
             port number, separated by a colon
