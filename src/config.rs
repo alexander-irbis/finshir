@@ -30,8 +30,7 @@ use structopt::StructOpt;
     about = "A coroutines-driven Low & Slow traffic sender, written in Rust",
     after_help = "By default, Finshir generates 100 empty spaces as data portions. If you want to \
                   override this behaviour, consider using the `--portions-file` option.\n\nFor \
-                  more information see <https://github.com/Gymmasssorla/finshir>.",
-    set_term_width = 80
+                  more information see <https://github.com/Gymmasssorla/finshir>."
 )]
 pub struct ArgsConfig {
     /// A waiting time span before test execution used to prevent a launch of an
