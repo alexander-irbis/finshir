@@ -45,7 +45,11 @@ pub fn run(config: &ArgsConfig) -> i32 {
         "Waiting {} and then spawning {} coroutines connected to {}.",
         crate::cyan(format_duration(config.wait)),
         crate::cyan(config.connections),
-        crate::cyan(&config.tester_config.socket_config.receiver.host)
+        crate::cyan(format!(
+            "{}:{}",
+            &config.tester_config.socket_config.receiver.host,
+            &config.tester_config.socket_config.receiver.port
+        ))
     );
     std::thread::sleep(config.wait);
 
