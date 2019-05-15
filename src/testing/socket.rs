@@ -44,6 +44,8 @@ impl FinshirSocket {
             match FinshirSocket::try_connect(config) {
                 Ok(socket) => {
                     info!("A new socket has been connected.");
+                    trace!("A recently connected socket >>> {:?}", socket);
+
                     return socket;
                 }
                 Err(err) => {
