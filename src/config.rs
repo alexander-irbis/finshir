@@ -16,10 +16,12 @@
 //
 // For more information see <https://github.com/Gymmasssorla/finshir>.
 
+use std::error::Error;
+use std::fmt::{self, Display, Formatter};
 use std::io;
 use std::net::SocketAddr;
 use std::net::ToSocketAddrs;
-use std::num::NonZeroUsize;
+use std::num::{NonZeroUsize, ParseIntError};
 use std::path::PathBuf;
 use std::str::FromStr;
 use std::time::Duration;
@@ -68,7 +70,8 @@ pub struct ArgsConfig {
         long = "connections",
         takes_value = true,
         value_name = "POSITIVE-INTEGER",
-        default_value = "1000"
+        default_value = "1000",
+        parse(try_from_str = "parse_non_zero_usize")
     )]
     pub connections: NonZeroUsize,
 
@@ -144,7 +147,8 @@ pub struct TesterConfig {
         long = "failed-count",
         takes_value = true,
         value_name = "POSITIVE-INTEGER",
-        default_value = "5"
+        default_value = "5",
+        parse(try_from_str = "parse_non_zero_usize")
     )]
     pub failed_count: NonZeroUsize,
 
@@ -230,6 +234,29 @@ fn parse_time_format(s: &str) -> Result<String, time::ParseError> {
     time::strftime(s, &time::now()).map(|_| String::from(s))
 }
 
+fn parse_non_zero_usize(number: &str) -> Result<NonZeroUsize, NonZeroUsizeError> {
+    let number: usize = number.parse().map_err(NonZeroUsizeError::InvalidFormat)?;
+
+    NonZeroUsize::new(number).ok_or(NonZeroUsizeError::ZeroValue)
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum NonZeroUsizeError {
+    InvalidFormat(ParseIntError),
+    ZeroValue,
+}
+
+impl Display for NonZeroUsizeError {
+    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+        match self {
+            NonZeroUsizeError::InvalidFormat(error) => write!(fmt, "{}", error),
+            NonZeroUsizeError::ZeroValue => write!(fmt, "The value equals to zero"),
+        }
+    }
+}
+
+impl Error for NonZeroUsizeError {}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -264,5 +291,39 @@ mod tests {
         check("%_=-%vbg=");
         check("yufb%44htv");
         check("sf%jhei9%990");
+    }
+
+    // Check that ordinary values are parsed correctly
+    #[test]
+    fn parses_valid_non_zero_usize() {
+        let check = |num| {
+            assert_eq!(
+                parse_non_zero_usize(num),
+                Ok(NonZeroUsize::new(num.parse().unwrap()).unwrap()),
+                "Parses valid NonZeroUsize incorrectly"
+            )
+        };
+
+        check("1");
+        check("3");
+        check("26655");
+        check("+75");
+    }
+
+    // Invalid numbers must produce the invalid format error
+    #[test]
+    fn parses_invalid_non_zero_usize() {
+        let check = |num| {
+            assert!(
+                parse_non_zero_usize(num).is_err(),
+                "Parses invalid NonZeroUsize correctly"
+            )
+        };
+
+        check("   ");
+        check("abc5653odr!");
+        check("6485&02hde");
+        check("-565642");
+        check(&"2178".repeat(50));
     }
 }
