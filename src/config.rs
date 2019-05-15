@@ -16,9 +16,12 @@
 //
 // For more information see <https://github.com/Gymmasssorla/finshir>.
 
+use std::io;
 use std::net::SocketAddr;
+use std::net::ToSocketAddrs;
 use std::num::{NonZeroUsize, ParseIntError};
 use std::path::PathBuf;
+use std::str::FromStr;
 use std::time::Duration;
 
 use humantime::parse_duration;
@@ -79,15 +82,15 @@ pub struct ArgsConfig {
 
 #[derive(StructOpt, Debug, Clone, Eq, PartialEq)]
 pub struct SocketConfig {
-    /// A receiver of generator traffic, specified as an IP address and a port
-    /// number, separated by a colon
+    /// A receiver of generator traffic, specified as an IP address (or a domain
+    /// name) and a port number, separated by a colon
     #[structopt(
         short = "r",
         long = "receiver",
         takes_value = true,
         value_name = "SOCKET-ADDRESS"
     )]
-    pub receiver: SocketAddr,
+    pub receiver: ReceiverAddrs,
 
     /// If a timeout is reached and a socket wasn't connected, the program will
     /// retry the operation later.
@@ -194,6 +197,39 @@ pub struct LoggingConfig {
         parse(try_from_str = "parse_time_format")
     )]
     pub date_time_format: String,
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub struct ReceiverAddrs {
+    /// This is a host that a user has specified. Examples: example.com,
+    /// duckduckgo.com, 127.0.0.1, etc.
+    pub host: String,
+
+    /// This is a port number that a user has specified.
+    pub port: u16,
+
+    /// Addresses, recognised by the `ToSocketAddrs` trait.
+    pub recognised_addrs: Vec<SocketAddr>,
+}
+
+impl FromStr for ReceiverAddrs {
+    type Err = io::Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        // This line validates the specified string
+        let addrs = s.to_socket_addrs()?.collect();
+
+        let (host, port) = s.split_at(s.rfind(':').unwrap());
+        let host = String::from(host);
+        let port = &port[1..];
+        let port: u16 = port.parse().unwrap();
+
+        Ok(ReceiverAddrs {
+            recognised_addrs: addrs,
+            host,
+            port,
+        })
+    }
 }
 
 fn parse_time_format(format: &str) -> Result<String, time::ParseError> {

@@ -59,11 +59,13 @@ impl FinshirSocket {
         // If we want to use Tor, then connect through TorStream. Otherwise, connect
         // through StdSocket
         let socket: StdSocket = if config.use_tor {
-            TorStream::connect(config.receiver)
-                .map_err(|err| TryConnectError::IoError(err))?
-                .unwrap()
+            TorStream::connect(
+                format!("{}:{}", config.receiver.host, config.receiver.port).as_str(),
+            )
+            .map_err(|err| TryConnectError::IoError(err))?
+            .unwrap()
         } else {
-            StdSocket::connect_timeout(&config.receiver, config.connect_timeout)
+            StdSocket::connect_timeout(&config.receiver.recognised_addrs[0], config.connect_timeout)
                 .map_err(|err| TryConnectError::IoError(err))?
         };
 
@@ -88,7 +90,7 @@ impl FinshirSocket {
                 SslConnector::builder(SslMethod::tls())
                     .expect("Couldn't connect to OpenSSL")
                     .build()
-                    .connect(&config.receiver.ip().to_string(), socket)
+                    .connect(&config.receiver.host, socket)
                     .map_err(TryConnectError::HandshakeError)?,
             )
         } else {
