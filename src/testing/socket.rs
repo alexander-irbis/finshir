@@ -16,12 +16,12 @@
 //
 // For more information see <https://github.com/Gymmasssorla/finshir>.
 
-use std::{fmt, io};
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 use std::io::{Read, Write};
 use std::net::TcpStream as StdSocket;
 use std::os::unix::io::{FromRawFd, IntoRawFd};
+use std::{fmt, io};
 
 use humantime::format_duration;
 use may::coroutine;
