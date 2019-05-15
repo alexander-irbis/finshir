@@ -19,7 +19,7 @@
 use std::io;
 use std::net::SocketAddr;
 use std::net::ToSocketAddrs;
-use std::num::{NonZeroUsize, ParseIntError};
+use std::num::NonZeroUsize;
 use std::path::PathBuf;
 use std::str::FromStr;
 use std::time::Duration;
@@ -68,8 +68,7 @@ pub struct ArgsConfig {
         long = "connections",
         takes_value = true,
         value_name = "POSITIVE-INTEGER",
-        default_value = "1000",
-        parse(try_from_str = "parse_non_zero_usize")
+        default_value = "1000"
     )]
     pub connections: NonZeroUsize,
 
@@ -152,8 +151,7 @@ pub struct TesterConfig {
         long = "failed-count",
         takes_value = true,
         value_name = "POSITIVE-INTEGER",
-        default_value = "5",
-        parse(try_from_str = "parse_non_zero_usize")
+        default_value = "5"
     )]
     pub failed_count: NonZeroUsize,
 
@@ -221,6 +219,8 @@ impl FromStr for ReceiverAddrs {
 
         let (host, port) = s.split_at(s.rfind(':').unwrap());
         let host = String::from(host);
+
+        // Eliminate the first ':' character because we've got ":PORT" here
         let port = &port[1..];
         let port: u16 = port.parse().unwrap();
 
@@ -232,13 +232,9 @@ impl FromStr for ReceiverAddrs {
     }
 }
 
-fn parse_time_format(format: &str) -> Result<String, time::ParseError> {
+fn parse_time_format(s: &str) -> Result<String, time::ParseError> {
     // If the `strftime` call succeeds, then the format is correct
-    time::strftime(format, &time::now()).map(|_| format.to_string())
-}
-
-fn parse_non_zero_usize(number: &str) -> Result<NonZeroUsize, ParseIntError> {
-    number.parse()
+    time::strftime(s, &time::now()).map(|_| String::from(s))
 }
 
 #[cfg(test)]
@@ -275,39 +271,5 @@ mod tests {
         check("%_=-%vbg=");
         check("yufb%44htv");
         check("sf%jhei9%990");
-    }
-
-    // Check that ordinary values are parsed correctly
-    #[test]
-    fn parses_valid_non_zero_usize() {
-        let check = |num| {
-            assert_eq!(
-                parse_non_zero_usize(num),
-                Ok(NonZeroUsize::new(num.parse().unwrap()).unwrap()),
-                "Parses valid NonZeroUsize incorrectly"
-            )
-        };
-
-        check("1");
-        check("3");
-        check("26655");
-        check("+75");
-    }
-
-    // Invalid numbers must produce the invalid format error
-    #[test]
-    fn parses_invalid_non_zero_usize() {
-        let check = |num| {
-            assert!(
-                parse_non_zero_usize(num).is_err(),
-                "Parses invalid NonZeroUsize correctly"
-            )
-        };
-
-        check("   ");
-        check("abc5653odr!");
-        check("6485&02hde");
-        check("-565642");
-        check(&"2178".repeat(50));
     }
 }

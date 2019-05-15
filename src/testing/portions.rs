@@ -66,10 +66,10 @@ pub enum ReadPortionsError {
 }
 
 impl Display for ReadPortionsError {
-    fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
         match self {
-            ReadPortionsError::ReadFailed(err) => write!(fmt, "{}", err),
-            ReadPortionsError::JsonParseFailed(err) => write!(fmt, "{}", err),
+            ReadPortionsError::ReadFailed(err) => err.fmt(f),
+            ReadPortionsError::JsonParseFailed(err) => err.fmt(f),
         }
     }
 }
