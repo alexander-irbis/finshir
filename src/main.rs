@@ -16,8 +16,6 @@
 //
 // For more information see <https://github.com/Gymmasssorla/finshir>.
 
-#![feature(result_map_or_else)]
-
 #[macro_use]
 extern crate log;
 

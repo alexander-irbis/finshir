@@ -133,7 +133,8 @@ fn send_portion(
         }
     };
 
-    socket
-        .flush()
-        .map_or_else(SendPortionResult::Failed, |_| res)
+    match socket.flush() {
+        Ok(_) => res,
+        Err(err) => SendPortionResult::Failed(err),
+    }
 }
