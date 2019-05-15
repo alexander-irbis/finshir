@@ -42,14 +42,10 @@ pub fn run(config: &ArgsConfig) -> i32 {
     let portions: Vec<&[u8]> = portions.iter().map(Vec::as_slice).collect();
 
     warn!(
-        "Waiting {} and then spawning {} coroutines connected through the {}.",
+        "Waiting {} and then spawning {} coroutines connected to {}.",
         crate::cyan(format_duration(config.wait)),
         crate::cyan(config.connections),
-        if config.tester_config.socket_config.use_tor {
-            "Tor network"
-        } else {
-            "regular Web"
-        }
+        crate::cyan(&config.tester_config.socket_config.receiver.host)
     );
     std::thread::sleep(config.wait);
 

@@ -91,11 +91,9 @@ pub struct SocketConfig {
     )]
     pub receiver: ReceiverAddrs,
 
-    /// If a timeout is reached and a socket wasn't connected, the program will
-    /// retry the operation later.
-    ///
-    /// Note that this option currently doesn't work on sockets which are trying
-    /// to connect through Tor.
+    /// Try connect a socket within a specified timeout. If a timeout is reached
+    /// and a socket wasn't connected, the program will retry the operation
+    /// later
     #[structopt(
         long = "connect-timeout",
         takes_value = true,
@@ -115,11 +113,6 @@ pub struct SocketConfig {
         parse(try_from_str = "parse_duration")
     )]
     pub write_timeout: Duration,
-
-    /// Torify all sockets by connecting to a SOCKS5 proxy running on
-    /// 127.0.0.1:9050
-    #[structopt(long = "use-tor")]
-    pub use_tor: bool,
 
     /// Use a TLS connection instead of the ordinary TCP protocol. It might be
     /// used to test HTTPS-based services.

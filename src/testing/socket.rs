@@ -16,16 +16,15 @@
 //
 // For more information see <https://github.com/Gymmasssorla/finshir>.
 
-use std::{fmt, io};
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 use std::io::{Read, Write};
 use std::net::TcpStream as StdSocket;
 use std::os::unix::io::{FromRawFd, IntoRawFd};
+use std::{fmt, io};
 
 use may::net::TcpStream as MaySocket;
 use openssl::ssl::{HandshakeError, SslConnector, SslMethod, SslStream};
-use tor_stream::TorStream;
 
 use crate::config::SocketConfig;
 
@@ -56,18 +55,11 @@ impl FinshirSocket {
     }
 
     pub fn try_connect(config: &SocketConfig) -> TryConnectResult {
-        // If we want to use Tor, then connect through TorStream. Otherwise, connect
-        // through StdSocket
-        let socket: StdSocket = if config.use_tor {
-            TorStream::connect(
-                format!("{}:{}", config.receiver.host, config.receiver.port).as_str(),
-            )
-            .map_err(|err| TryConnectError::IoError(err))?
-            .unwrap()
-        } else {
-            StdSocket::connect_timeout(&config.receiver.recognised_addrs[0], config.connect_timeout)
-                .map_err(|err| TryConnectError::IoError(err))?
-        };
+        let socket: StdSocket = StdSocket::connect_timeout(
+            &config.receiver.recognised_addrs[0],
+            config.connect_timeout,
+        )
+        .map_err(|err| TryConnectError::IoError(err))?;
 
         // We send packets quite rarely (the default is 30secs), so the Nagle algorithm
         // doesn't help us

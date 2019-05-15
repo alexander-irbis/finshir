@@ -19,7 +19,7 @@
   
   <img src="ICON.png" width="520px"><br>
   
-  You are seeing a high-performant, coroutines-driven, and fully customisable implementation of [Low & Slow](https://www.cloudflare.com/learning/ddos/ddos-low-and-slow-attack/) load generator designed for real-world pentesting. Its complete undetectability is achieved by connecting through [Tor](https://en.wikipedia.org/wiki/Tor_%28anonymity_network%29).
+  You are seeing a high-performant, coroutines-driven, and fully customisable implementation of [Low & Slow](https://www.cloudflare.com/learning/ddos/ddos-low-and-slow-attack/) load generator designed for real-world pentesting. You can easily torify/proxify it using various platform-dependent utilities.
   
   <h4>
     <a href="https://github.com/Gymmasssorla/finshir/pulse">Pulse</a> &middot;
@@ -40,11 +40,11 @@
  - [Options](https://github.com/Gymmasssorla/finshir#options)
  - [Overview](https://github.com/Gymmasssorla/finshir#overview)
    - [Minimal command](https://github.com/Gymmasssorla/finshir#minimal-command)
-   - [Using the Tor network](https://github.com/Gymmasssorla/finshir#using-the-tor-network)
    - [Test intensity](https://github.com/Gymmasssorla/finshir#test-intensity)
    - [Connections count](https://github.com/Gymmasssorla/finshir#connections-count)
    - [Custom data portions](https://github.com/Gymmasssorla/finshir#custom-data-portions)
    - [Logging options](https://github.com/Gymmasssorla/finshir#logging-options)
+   - [TLS support](https://github.com/Gymmasssorla/finshir#tls-support)
  - [Gallery](https://github.com/Gymmasssorla/finshir#gallery)
    - [Initialisation](https://github.com/Gymmasssorla/finshir#initialisation)
    - [Errors](https://github.com/Gymmasssorla/finshir#errors)
@@ -103,15 +103,12 @@ FLAGS:
     -h, --help       Prints help information
         --use-tls    Use a TLS connection instead of the ordinary TCP protocol. It might be used to test HTTPS-based
                      services.
-        --use-tor    Torify all sockets by connecting to a SOCKS5 proxy running on 127.0.0.1:9050
     -V, --version    Prints version information
 
 OPTIONS:
-        --connect-timeout <TIME-SPAN>        If a timeout is reached and a socket wasn't connected, the program will
-                                             retry the operation later.
-                                             
-                                             Note that this option currently doesn't work on sockets which are trying to
-                                             connect through Tor. [default: 30secs]
+        --connect-timeout <TIME-SPAN>        Try connect a socket within a specified timeout. If a timeout is reached
+                                             and a socket wasn't connected, the program will retry the operation later
+                                             [default: 30secs]
     -c, --connections <POSITIVE-INTEGER>     A number of connections the program will handle simultaneously. This option
                                              also equals to a number of coroutines [default: 1000]
         --date-time-format <STRING>          A format for displaying local date and time in log messages. Type `man
@@ -155,14 +152,6 @@ The following command spawns 1000 coroutines, each trying to establish a new TCP
 ```bash
 # Specify one of the Google's IP addresses as a target web server
 $ finshir --receiver=google.com:80
-```
-
-### Using the Tor network
-You can do this by specifying the `--use-tor` flag. It connects to your local SOCKS5 proxy running on 9050 port, which is typically used by Tor proxies. Also consider modifying the default configuration file located in `/etc/tor/torrc`.
-
-```bash
-# Connect to the Google's address through your local Tor proxy
-$ finshir --receiver=google.com:80 --use-tor
 ```
 
 ### Test intensity
