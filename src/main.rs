@@ -21,7 +21,7 @@
 #[macro_use]
 extern crate log;
 
-use colored::Colorize;
+use colored::{ColoredString, Colorize};
 use structopt::StructOpt;
 
 use crate::config::ArgsConfig;
@@ -68,4 +68,8 @@ fn title() {
             .green()
             .underline()
     );
+}
+
+pub fn cyan<S: ToString>(value: S) -> ColoredString {
+    value.to_string().cyan()
 }

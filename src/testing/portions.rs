@@ -22,7 +22,6 @@ use std::fs::File;
 use std::io;
 use std::path::Path;
 
-use colored::{ColoredString, Colorize};
 use serde_json;
 
 pub type ReadPortionsResult = Result<Vec<Vec<u8>>, ReadPortionsError>;
@@ -76,10 +75,6 @@ impl Display for ReadPortionsError {
 }
 
 impl Error for ReadPortionsError {}
-
-pub fn cyan<S: ToString>(value: S) -> ColoredString {
-    value.to_string().cyan()
-}
 
 #[cfg(test)]
 mod tests {

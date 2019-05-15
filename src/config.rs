@@ -119,6 +119,11 @@ pub struct SocketConfig {
     #[structopt(long = "use-tor")]
     pub use_tor: bool,
 
+    /// Use a TLS connection instead of the ordinary TCP protocol. It might be
+    /// used to test HTTPS-based services.
+    #[structopt(long = "use-tls")]
+    pub use_tls: bool,
+
     /// Specifies the IP_TTL value for all future sockets. Usually this value
     /// equals a number of routers that a packet can go through
     #[structopt(long = "ip-ttl", takes_value = true, value_name = "UNSIGNED-INTEGER")]

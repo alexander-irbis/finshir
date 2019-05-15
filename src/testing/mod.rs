@@ -18,24 +18,21 @@
 
 use std::io::{self, Write};
 use std::num::NonZeroUsize;
-use std::os::unix::io::{FromRawFd, IntoRawFd};
 use std::time::Instant;
 
 use humantime::format_duration;
 use may::{self, coroutine, go};
-use tor_stream::TorStream;
 
-use crate::config::{ArgsConfig, SocketConfig, TesterConfig};
+use crate::config::{ArgsConfig, TesterConfig};
+use crate::testing::socket::FinshirSocket;
 
-mod helpers;
-
-type StdSocket = std::net::TcpStream;
-type MaySocket = may::net::TcpStream;
+mod portions;
+mod socket;
 
 /// This is the key function which accepts `ArgsConfig` and spawns all
 /// coroutines, returning 0 on success and 1 on failure.
 pub fn run(config: &ArgsConfig) -> i32 {
-    let portions = match helpers::get_portions(config.portions_file.as_ref()) {
+    let portions = match portions::get_portions(config.portions_file.as_ref()) {
         Err(err) => {
             error!("Failed to parse the JSON >>> {}!", err);
             return 1;
@@ -46,8 +43,8 @@ pub fn run(config: &ArgsConfig) -> i32 {
 
     warn!(
         "Waiting {} and then spawning {} coroutines connected through the {}.",
-        helpers::cyan(format_duration(config.wait)),
-        helpers::cyan(config.connections),
+        crate::cyan(format_duration(config.wait)),
+        crate::cyan(config.connections),
         if config.tester_config.socket_config.use_tor {
             "Tor network"
         } else {
@@ -75,7 +72,7 @@ fn run_tester(config: &TesterConfig, portions: &[&[u8]]) {
     let start = Instant::now();
 
     loop {
-        let mut socket: MaySocket = connect_socket(&config.socket_config);
+        let mut socket = FinshirSocket::connect(&config.socket_config);
 
         for &portion in portions {
             if start.elapsed() >= config.test_duration {
@@ -87,15 +84,15 @@ fn run_tester(config: &TesterConfig, portions: &[&[u8]]) {
                 SendPortionResult::Success => {
                     info!(
                         "{} byte(s) have been sent. Waiting {}...",
-                        helpers::cyan(portion.len()),
-                        helpers::cyan(format_duration(config.write_periodicity))
+                        crate::cyan(portion.len()),
+                        crate::cyan(format_duration(config.write_periodicity))
                     );
                 }
                 SendPortionResult::Failed(err) => {
                     error!(
                         "Sending {} byte(s) failed {} times >>> {}! Reconnecting the socket...",
-                        helpers::cyan(portion.len()),
-                        helpers::cyan(config.failed_count),
+                        crate::cyan(portion.len()),
+                        crate::cyan(config.failed_count),
                         err,
                     );
                     break;
@@ -116,7 +113,7 @@ enum SendPortionResult {
 }
 
 fn send_portion(
-    socket: &mut MaySocket,
+    socket: &mut FinshirSocket,
     portion: &[u8],
     failed_count: NonZeroUsize,
 ) -> SendPortionResult {
@@ -127,7 +124,7 @@ fn send_portion(
                 Err(err) => {
                     error!(
                         "Failed to send {} byte(s) >>> {}! Retrying the operation...",
-                        helpers::cyan(portion.len()),
+                        crate::cyan(portion.len()),
                         err
                     );
                 }
@@ -143,43 +140,4 @@ fn send_portion(
     socket
         .flush()
         .map_or_else(SendPortionResult::Failed, |_| res)
-}
-
-fn connect_socket(config: &SocketConfig) -> MaySocket {
-    loop {
-        match try_connect_socket(config) {
-            Ok(socket) => {
-                info!("A new socket has been connected.");
-                return socket;
-            }
-            Err(err) => {
-                error!(
-                    "Failed to connect a socket >>> {}! Retrying the operation...",
-                    err
-                );
-            }
-        }
-    }
-}
-
-fn try_connect_socket(config: &SocketConfig) -> io::Result<MaySocket> {
-    let socket = if config.use_tor {
-        TorStream::connect(config.receiver)?.unwrap()
-    } else {
-        StdSocket::connect_timeout(&config.receiver, config.connect_timeout)?
-    };
-
-    // We send packets quite rarely (the default is 30secs), so the Nagle algorithm
-    // doesn't help us
-    socket
-        .set_nodelay(true)
-        .expect("Cannot disable TCP_NODELAY");
-
-    socket.set_write_timeout(Some(config.write_timeout))?;
-
-    if let Some(val) = config.ip_ttl {
-        socket.set_ttl(val)?;
-    }
-
-    unsafe { Ok(MaySocket::from_raw_fd(socket.into_raw_fd())) }
 }
