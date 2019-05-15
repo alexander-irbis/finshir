@@ -52,7 +52,7 @@
  - [Contributing](https://github.com/Gymmasssorla/finshir#contributing)
  - [Target platform](https://github.com/Gymmasssorla/finshir#target-platform)
  - [Legal disclaimer](https://github.com/Gymmasssorla/finshir#legal-disclaimer)
- - [Project References](https://github.com/Gymmasssorla/finshir#project-references)
+ - [Project references](https://github.com/Gymmasssorla/finshir#project-references)
  - [Contacts](https://github.com/Gymmasssorla/finshir#contacts)
 
 ----------
