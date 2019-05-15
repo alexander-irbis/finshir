@@ -101,6 +101,8 @@ FLAGS:
     -V, --version    Prints version information
 
 OPTIONS:
+        --connect-periodicity <TIME-SPAN>    This option will be applied if a socket connection error occurs (the next
+                                             connection will be performed after this periodicity) [default: 10secs]
         --connect-timeout <TIME-SPAN>        Try connect a socket within a specified timeout. If a timeout is reached
                                              and a socket wasn't connected, the program will retry the operation later
                                              [default: 30secs]

@@ -106,6 +106,17 @@ pub struct SocketConfig {
     )]
     pub connect_timeout: Duration,
 
+    /// This option will be applied if a socket connection error occurs (the
+    /// next connection will be performed after this periodicity)
+    #[structopt(
+        long = "connect-periodicity",
+        takes_value = true,
+        value_name = "TIME-SPAN",
+        default_value = "10secs",
+        parse(try_from_str = "parse_duration")
+    )]
+    pub connect_periodicity: Duration,
+
     /// If a timeout is reached and a data portion wasn't sent, the program will
     /// retry the operation later
     #[structopt(

@@ -16,13 +16,15 @@
 //
 // For more information see <https://github.com/Gymmasssorla/finshir>.
 
+use std::{fmt, io};
 use std::error::Error;
 use std::fmt::{Display, Formatter};
 use std::io::{Read, Write};
 use std::net::TcpStream as StdSocket;
 use std::os::unix::io::{FromRawFd, IntoRawFd};
-use std::{fmt, io};
 
+use humantime::format_duration;
+use may::coroutine;
 use may::net::TcpStream as MaySocket;
 use openssl::ssl::{HandshakeError, SslConnector, SslMethod, SslStream};
 
@@ -46,9 +48,11 @@ impl FinshirSocket {
                 }
                 Err(err) => {
                     error!(
-                        "Failed to connect a socket >>> {}! Retrying the operation...",
-                        err
+                        "Failed to connect a socket >>> {}! Retrying the operation after {}...",
+                        err,
+                        crate::cyan(format_duration(config.connect_periodicity))
                     );
+                    coroutine::sleep(config.connect_periodicity);
                 }
             }
         }
