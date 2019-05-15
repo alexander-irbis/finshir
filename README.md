@@ -52,7 +52,7 @@
  - [Contributing](https://github.com/Gymmasssorla/finshir#contributing)
  - [Target platform](https://github.com/Gymmasssorla/finshir#target-platform)
  - [Legal disclaimer](https://github.com/Gymmasssorla/finshir#legal-disclaimer)
- - [Project links](https://github.com/Gymmasssorla/finshir#project-links)
+ - [Project References](https://github.com/Gymmasssorla/finshir#project-references)
  - [Contacts](https://github.com/Gymmasssorla/finshir#contacts)
 
 ----------
@@ -230,7 +230,7 @@ Finshir was developed as a means of testing stress resistance of web servers, an
 
 ----------
 
-## Project links
+## Project references
  - https://www.reddit.com/r/rust/comments/bm6ttn/finshir_a_coroutinesdriven_low_slow_ddos_attack/
  - https://www.producthunt.com/posts/finshir
 
