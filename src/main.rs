@@ -30,6 +30,7 @@ mod testing;
 
 fn main() {
     setup_ctrlc_handler();
+    openssl_probe::init_ssl_cert_env_vars();
 
     let config = ArgsConfig::from_args();
     title();
