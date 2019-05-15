@@ -101,57 +101,46 @@ USAGE:
 
 FLAGS:
     -h, --help       Prints help information
-        --use-tor    Torify all sockets by connecting to a SOCKS5 proxy running
-                     on 127.0.0.1:9050
+        --use-tls    Use a TLS connection instead of the ordinary TCP protocol. It might be used to test HTTPS-based
+                     services.
+        --use-tor    Torify all sockets by connecting to a SOCKS5 proxy running on 127.0.0.1:9050
     -V, --version    Prints version information
 
 OPTIONS:
-        --connect-timeout <TIME-SPAN>
-            If a timeout is reached and a socket wasn't connected, the program
-            will retry the operation later.
-            
-            Note that this option currently doesn't work on sockets which are
-            trying to connect through Tor. [default: 30secs]
-    -c, --connections <POSITIVE-INTEGER>
-            A number of connections the program will handle simultaneously. This
-            option also equals to a number of coroutines [default: 1000]
-        --date-time-format <STRING>
-            A format for displaying local date and time in log messages. Type
-            `man strftime` to see the format specification [default: %X]
-        --failed-count <POSITIVE-INTEGER>
-            A number of failed data transmissions used to reconnect a socket to
-            a remote web server [default: 5]
-        --ip-ttl <UNSIGNED-INTEGER>
-            Specifies the IP_TTL value for all future sockets. Usually this
-            value equals a number of routers that a packet can go through
-    -f, --portions-file <LOCATION>
-            A file which consists of a custom JSON array of data portions,
-            specified as strings.
-            
-            When a coroutine finished sending all portions, it reconnects its
-            socket and starts sending them again.
-    -r, --receiver <SOCKET-ADDRESS>
-            A receiver of generator traffic, specified as an IP address and a
-            port number, separated by a colon
-    -d, --test-duration <TIME-SPAN>
-            A whole test duration, after which all spawned coroutines will stop
-            their work [default: 64years 64hours 64secs]
-    -v, --verbosity <LEVEL>
-            Enable one of the possible verbosity levels. The zero level doesn't
-            print anything, and the last level prints everything [default: 3]
-            [possible values: 0, 1, 2, 3, 4, 5]
-    -w, --wait <TIME-SPAN>
-            A waiting time span before test execution used to prevent a launch
-            of an erroneous (unwanted) test [default: 5secs]
-        --write-periodicity <TIME-SPAN>
-            A time interval between writing data portions. This option can be
-            used to modify test intensity [default: 30secs]
-        --write-timeout <TIME-SPAN>
-            If a timeout is reached and a data portion wasn't sent, the program
-            will retry the operation later [default: 30secs]
+        --connect-timeout <TIME-SPAN>        If a timeout is reached and a socket wasn't connected, the program will
+                                             retry the operation later.
+                                             
+                                             Note that this option currently doesn't work on sockets which are trying to
+                                             connect through Tor. [default: 30secs]
+    -c, --connections <POSITIVE-INTEGER>     A number of connections the program will handle simultaneously. This option
+                                             also equals to a number of coroutines [default: 1000]
+        --date-time-format <STRING>          A format for displaying local date and time in log messages. Type `man
+                                             strftime` to see the format specification [default: %X]
+        --failed-count <POSITIVE-INTEGER>    A number of failed data transmissions used to reconnect a socket to a
+                                             remote web server [default: 5]
+        --ip-ttl <UNSIGNED-INTEGER>          Specifies the IP_TTL value for all future sockets. Usually this value
+                                             equals a number of routers that a packet can go through
+    -f, --portions-file <LOCATION>           A file which consists of a custom JSON array of data portions, specified as
+                                             strings.
+                                             
+                                             When a coroutine finished sending all portions, it reconnects its socket
+                                             and starts sending them again.
+    -r, --receiver <SOCKET-ADDRESS>          A receiver of generator traffic, specified as an IP address (or a domain
+                                             name) and a port number, separated by a colon
+    -d, --test-duration <TIME-SPAN>          A whole test duration, after which all spawned coroutines will stop their
+                                             work [default: 64years 64hours 64secs]
+    -v, --verbosity <LEVEL>                  Enable one of the possible verbosity levels. The zero level doesn't print
+                                             anything, and the last level prints everything [default: 3]  [possible
+                                             values: 0, 1, 2, 3, 4, 5]
+    -w, --wait <TIME-SPAN>                   A waiting time span before test execution used to prevent a launch of an
+                                             erroneous (unwanted) test [default: 5secs]
+        --write-periodicity <TIME-SPAN>      A time interval between writing data portions. This option can be used to
+                                             modify test intensity [default: 30secs]
+        --write-timeout <TIME-SPAN>          If a timeout is reached and a data portion wasn't sent, the program will
+                                             retry the operation later [default: 30secs]
 
-By default, Finshir generates 100 empty spaces as data portions. If you want to
-override this behaviour, consider using the `--portions-file` option.
+By default, Finshir generates 100 empty spaces as data portions. If you want to override this behaviour, consider using
+the `--portions-file` option.
 
 For more information see <https://github.com/Gymmasssorla/finshir>.
 ```
@@ -165,7 +154,7 @@ The following command spawns 1000 coroutines, each trying to establish a new TCP
 
 ```bash
 # Specify one of the Google's IP addresses as a target web server
-$ finshir --receiver=64.233.165.113:80
+$ finshir --receiver=google.com:80
 ```
 
 ### Using the Tor network
@@ -173,7 +162,7 @@ You can do this by specifying the `--use-tor` flag. It connects to your local SO
 
 ```bash
 # Connect to the Google's address through your local Tor proxy
-$ finshir --receiver=64.233.165.113:80 --use-tor
+$ finshir --receiver=google.com:80 --use-tor
 ```
 
 ### Test intensity
@@ -181,7 +170,7 @@ Low & Slow techniques assume to be VERY SLOW, which means that you typically sen
 
 ```bash
 # Test the Google's server sending data portions every one minute
-$ finshir --receiver=64.233.165.113:80 --write-periodicity=1min
+$ finshir --receiver=google.com:80 --write-periodicity=1min
 ```
 
 ### Connections count
@@ -192,7 +181,7 @@ The default number of parallel connections is 1000. However, you can modify this
 $ sudo ulimit -n 17015
 
 # Test the target server using 17000 parallel TCP connections
-$ finshir --receiver=64.233.165.113:80 --connections=17000
+$ finshir --receiver=google.com:80 --connections=17000
 ```
 
 ### Custom data portions
@@ -200,7 +189,7 @@ By default, Finshir generates 100 empty spaces as data portions to send. You can
 
 ```bash
 # Send partial HTTP headers to Google using `--portions-file`
-$ finshir --receiver=64.233.165.113:80 --portions-file files/google.json
+$ finshir --receiver=google.com:80 --portions-file files/google.json
 ```
 
 ### Logging options
@@ -208,7 +197,16 @@ Consider specifying a custom verbosity level from 0 to 5 (inclusively), which is
 
 ```bash
 # Use a custom date-time format and the last verbosity level
-$ finshir --receiver=64.233.165.113:80 --date-time-format="%F" --verbosity=5
+$ finshir --receiver=google.com:80 --date-time-format="%F" --verbosity=5
+```
+
+### TLS support
+Most of web servers today use the HTTPS protocol instead of HTTP, which is based on TLS. Since [v0.2.0](https://github.com/Gymmasssorla/finshir/releases/tag/v0.2.0), Finshir has functionality to connect through TLS using the `--use-tls` flag.
+
+```bash
+# Connect to the Google's server through TLS on 443 port (HTTPS)
+$ finshir --receiver=google.com:443 --use-tls
+
 ```
 
 ----------
