@@ -65,7 +65,7 @@ impl FinshirSocket {
             &config.receiver.recognised_addrs[0],
             config.connect_timeout,
         )
-        .map_err(|err| TryConnectError::IoError(err))?;
+        .map_err(TryyConnectError::IoError)?;
 
         // We send packets quite rarely (the default is 30secs), so the Nagle algorithm
         // doesn't help us
