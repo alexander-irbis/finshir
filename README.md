@@ -230,6 +230,7 @@ Finshir was developed as a means of testing stress resistance of web servers, an
 ## Project references
  - https://www.reddit.com/r/rust/comments/bm6ttn/finshir_a_coroutinesdriven_low_slow_ddos_attack/
  - https://www.producthunt.com/posts/finshir
+ - https://www.reddit.com/r/hacking/comments/bpg0by/ive_written_a_customizable_optimized_alternative/
 
 ----------
 
