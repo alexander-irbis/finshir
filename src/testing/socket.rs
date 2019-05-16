@@ -156,6 +156,8 @@ mod tests {
 
     use super::*;
 
+    // The default configurations. They will be used later to construct different
+    // instances of SocketConfig.
     lazy_static! {
         static ref DATA: &'static [u8] =
             "Hello from a world when programmers are white bananas".as_bytes();
