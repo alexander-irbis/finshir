@@ -142,3 +142,65 @@ impl Read for FinshirSocket {
         }
     }
 }
+
+// Test communication between two sockets
+#[cfg(test)]
+mod tests {
+    use std::str::FromStr;
+    use std::time::Duration;
+
+    use may::go;
+    use may::net::TcpListener;
+
+    use crate::config::ReceiverAddrs;
+
+    use super::*;
+
+    lazy_static! {
+        static ref DATA: &'static [u8] =
+            "Hello from a world when programmers are white bananas".as_bytes();
+        static ref CONNECT_TIMEOUT: Duration = Duration::from_secs(10);
+        static ref CONNECT_PERIODICITY: Duration = Duration::from_secs(0);
+        static ref WRITE_TIMEOUT: Duration = Duration::from_secs(10);
+        static ref IP_TTL: Option<u32> = Some(15);
+    }
+
+    #[test]
+    fn test_raw_tcp() {
+        let server = TcpListener::bind("0.0.0.0:0").expect("Cannot bind TcpListener");
+
+        let config = SocketConfig {
+            receiver: ReceiverAddrs::from_str(&server.local_addr().unwrap().to_string()).unwrap(),
+            connect_timeout: *CONNECT_TIMEOUT,
+            connect_periodicity: *CONNECT_PERIODICITY,
+            write_timeout: *WRITE_TIMEOUT,
+            use_tls: false,
+            ip_ttl: *IP_TTL,
+        };
+
+        // The server must receive the same data as it was sent by our client
+        let handle = go!(move || {
+            let mut buff = vec![0; DATA.len()];
+
+            let (mut conn, _) = server
+                .accept()
+                .expect("The server couldn't accept a connection");
+
+            conn.read_exact(&mut buff)
+                .expect("Cannot read from a client");
+            assert_eq!(buff.as_slice(), *DATA, "Received different data");
+        });
+
+        let mut client =
+            match FinshirSocket::try_connect(&config).expect("FinshirSocket::try_connect failed") {
+                FinshirSocket::RawTcp(tcp) => tcp,
+                FinshirSocket::Tls(_) => panic!("TLS socket received but raw TCP was expected"),
+            };
+
+        // Send all the data to the server and wait until it ends its work
+        client.write_all(*DATA).expect("client.write_all failed");
+        client.flush().expect("client.flush failed");
+
+        handle.join().unwrap();
+    }
+}

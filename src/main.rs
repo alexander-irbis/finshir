@@ -17,6 +17,8 @@
 // For more information see <https://github.com/Gymmasssorla/finshir>.
 
 #[macro_use]
+extern crate lazy_static;
+#[macro_use]
 extern crate log;
 
 use colored::{ColoredString, Colorize};
