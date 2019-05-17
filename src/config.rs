@@ -182,7 +182,10 @@ pub struct TesterConfig {
 #[derive(StructOpt, Debug, Clone, Eq, PartialEq)]
 pub struct LoggingConfig {
     /// Enable one of the possible verbosity levels. The zero level doesn't
-    /// print anything, and the last level prints everything
+    /// print anything, and the last level prints everything.
+    ///
+    /// Note that specifying the 4 and 5 verbosity levels might decrease
+    /// performance, do it only for debugging.
     #[structopt(
         short = "v",
         long = "verbosity",

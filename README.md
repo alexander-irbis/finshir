@@ -124,8 +124,11 @@ OPTIONS:
     -d, --test-duration <TIME-SPAN>          A whole test duration, after which all spawned coroutines will stop their
                                              work [default: 64years 64hours 64secs]
     -v, --verbosity <LEVEL>                  Enable one of the possible verbosity levels. The zero level doesn't print
-                                             anything, and the last level prints everything [default: 3]  [possible
-                                             values: 0, 1, 2, 3, 4, 5]
+                                             anything, and the last level prints everything.
+                                             
+                                             Note that specifying the 4 and 5 verbosity levels might decrease
+                                             performance, do it only for debugging. [default: 3]  [possible values: 0,
+                                             1, 2, 3, 4, 5]
     -w, --wait <TIME-SPAN>                   A waiting time span before test execution used to prevent a launch of an
                                              erroneous (unwanted) test [default: 5secs]
         --write-periodicity <TIME-SPAN>      A time interval between writing data portions. This option can be used to
