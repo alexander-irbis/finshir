@@ -68,7 +68,7 @@ fn title() {
         format!("version {}", structopt::clap::crate_version!())
             .red()
             .bold(),
-        "A coroutines-driven Low & Slow traffic sender, written in Rust"
+        "A coroutines-driven Low & Slow traffic sender, written in Rust\n"
             .green()
             .underline()
     );
