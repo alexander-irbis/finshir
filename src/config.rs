@@ -123,7 +123,7 @@ pub struct SocketConfig {
         long = "write-timeout",
         takes_value = true,
         value_name = "TIME-SPAN",
-        default_value = "30secs",
+        default_value = "10secs",
         parse(try_from_str = "parse_duration")
     )]
     pub write_timeout: Duration,
