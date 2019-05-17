@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg">
   </a>
   <a href="https://crates.io/crates/finshir">
-    <img src="https://img.shields.io/badge/crates.io-v0.2.0-orange.svg">
+    <img src="https://img.shields.io/badge/crates.io-v0.2.1-orange.svg">
   </a>
   <a href="https://semver.org">
     <img src="https://img.shields.io/badge/semver-follows-green.svg">
@@ -87,7 +87,7 @@ The easiest way to run Finshir on your system is to download the pre-compiled bi
 
 ## Options
 ```
-finshir 0.2.0
+finshir 0.2.1
 Temirkhan Myrzamadi <gymmasssorla@gmail.com>
 A coroutines-driven Low & Slow traffic sender, written in Rust
 
@@ -105,7 +105,7 @@ OPTIONS:
                                              connection will be performed after this periodicity) [default: 10secs]
         --connect-timeout <TIME-SPAN>        Try connect a socket within a specified timeout. If a timeout is reached
                                              and a socket wasn't connected, the program will retry the operation later
-                                             [default: 30secs]
+                                             [default: 10secs]
     -c, --connections <POSITIVE-INTEGER>     A number of connections the program will handle simultaneously. This option
                                              also equals to a number of coroutines [default: 1000]
         --date-time-format <STRING>          A format for displaying local date and time in log messages. Type `man
@@ -131,7 +131,7 @@ OPTIONS:
         --write-periodicity <TIME-SPAN>      A time interval between writing data portions. This option can be used to
                                              modify test intensity [default: 30secs]
         --write-timeout <TIME-SPAN>          If a timeout is reached and a data portion wasn't sent, the program will
-                                             retry the operation later [default: 30secs]
+                                             retry the operation later [default: 10secs]
 
 By default, Finshir generates 100 empty spaces as data portions. If you want to override this behaviour, consider using
 the `--portions-file` option.
