@@ -51,7 +51,7 @@ fn setup_ctrlc_handler() {
         info!("cancellation has been received. Exiting the process...");
         std::process::exit(0);
     })
-    .expect("error while setting the Ctrl-C handler");
+    .expect("Error while setting the Ctrl-C handler");
 
     trace!("the Ctrl-C handler has been configured.");
 }

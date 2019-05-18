@@ -71,7 +71,7 @@ impl FinshirSocket {
         // doesn't help us
         socket
             .set_nodelay(true)
-            .expect("cannot disable TCP_NODELAY");
+            .expect("Cannot disable TCP_NODELAY");
         if let Some(val) = config.ip_ttl {
             socket.set_ttl(val).map_err(TryConnectError::IoError)?;
         }
@@ -86,7 +86,7 @@ impl FinshirSocket {
         Ok(if config.use_tls {
             FinshirSocket::Tls(
                 SslConnector::builder(SslMethod::tls())
-                    .expect("couldn't connect to OpenSSL")
+                    .expect("Couldn't connect to OpenSSL")
                     .build()
                     .connect(&config.receiver.host, socket)
                     .map_err(TryConnectError::HandshakeError)?,
@@ -172,7 +172,7 @@ mod tests {
 
     #[test]
     fn test_raw_tcp() {
-        let server = TcpListener::bind("0.0.0.0:0").expect("cannot bind TcpListener");
+        let server = TcpListener::bind("0.0.0.0:0").expect("Cannot bind TcpListener");
 
         let config = SocketConfig {
             receiver: ReceiverAddrs::from_str(&server.local_addr().unwrap().to_string()).unwrap(),
@@ -189,11 +189,11 @@ mod tests {
 
             let (mut conn, _) = server
                 .accept()
-                .expect("the server couldn't accept a connection");
+                .expect("The server couldn't accept a connection");
 
             conn.read_exact(&mut buff)
-                .expect("cannot read from a client");
-            assert_eq!(buff.as_slice(), *DATA, "received different data");
+                .expect("Cannot read from a client");
+            assert_eq!(buff.as_slice(), *DATA, "Received different data");
         });
 
         let mut client =

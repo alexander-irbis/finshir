@@ -69,7 +69,7 @@ pub fn setup_logging(logging_config: &LoggingConfig) {
         .level(associated_level(logging_config.verbosity))
         .level_for("may", LevelFilter::Off)
         .apply()
-        .expect("applying the fern::Dispatch has failed");
+        .expect("Applying the fern::Dispatch has failed");
 }
 
 fn associated_level(verbosity: i32) -> LevelFilter {
@@ -80,6 +80,6 @@ fn associated_level(verbosity: i32) -> LevelFilter {
         3 => LevelFilter::Info,
         4 => LevelFilter::Debug,
         5 => LevelFilter::Trace,
-        _ => panic!("no such verbosity level in existence"),
+        _ => panic!("No such verbosity level in existence"),
     }
 }

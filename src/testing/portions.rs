@@ -105,7 +105,7 @@ mod tests {
     /// The `get_options()` function must choose the right variants.
     #[test]
     fn gets_portions() {
-        check_file(get_portions(Some("files/test.json")).expect("failed to parse JSON"));
+        check_file(get_portions(Some("files/test.json")).expect("Failed to parse JSON"));
         check_spaces(get_portions::<&str>(None).expect("get_portions(none) failed"));
     }
 }

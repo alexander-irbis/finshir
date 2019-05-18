@@ -264,7 +264,7 @@ impl Display for NonZeroUsizeError {
     fn fmt(&self, fmt: &mut Formatter) -> fmt::Result {
         match self {
             NonZeroUsizeError::InvalidFormat(error) => write!(fmt, "{}", error),
-            NonZeroUsizeError::ZeroValue => write!(fmt, "the value equals to zero"),
+            NonZeroUsizeError::ZeroValue => write!(fmt, "The value equals to zero"),
         }
     }
 }
@@ -282,7 +282,7 @@ mod tests {
             assert_eq!(
                 parse_time_format(format),
                 Ok(String::from(format)),
-                "parses valid time incorrectly"
+                "Parses valid time incorrectly"
             )
         };
 
@@ -298,7 +298,7 @@ mod tests {
         let check = |format| {
             assert!(
                 parse_time_format(format).is_err(),
-                "parses invalid time correctly"
+                "Parses invalid time correctly"
             )
         };
 
@@ -314,7 +314,7 @@ mod tests {
             assert_eq!(
                 parse_non_zero_usize(num),
                 Ok(NonZeroUsize::new(num.parse().unwrap()).unwrap()),
-                "parses valid NonZeroUsize incorrectly"
+                "Parses valid NonZeroUsize incorrectly"
             )
         };
 
@@ -330,7 +330,7 @@ mod tests {
         let check = |num| {
             assert!(
                 parse_non_zero_usize(num).is_err(),
-                "parses invalid NonZeroUsize correctly"
+                "Parses invalid NonZeroUsize correctly"
             )
         };
 
