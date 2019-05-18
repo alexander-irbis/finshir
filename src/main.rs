@@ -48,12 +48,12 @@ fn main() {
 
 fn setup_ctrlc_handler() {
     ctrlc::set_handler(move || {
-        info!("Cancellation has been received. Exiting the process...");
+        info!("cancellation has been received. Exiting the process...");
         std::process::exit(0);
     })
-    .expect("Error while setting the Ctrl-C handler");
+    .expect("error while setting the Ctrl-C handler");
 
-    trace!("The Ctrl-C handler has been configured.");
+    trace!("the Ctrl-C handler has been configured.");
 }
 
 fn title() {

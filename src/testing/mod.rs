@@ -34,7 +34,7 @@ mod socket;
 pub fn run(config: &ArgsConfig) -> i32 {
     let portions = match portions::get_portions(config.portions_file.as_ref()) {
         Err(err) => {
-            error!("Failed to parse the JSON >>> {}!", err);
+            error!("failed to parse the JSON >>> {}!", err);
             return 1;
         }
         Ok(res) => res,
@@ -42,7 +42,7 @@ pub fn run(config: &ArgsConfig) -> i32 {
     let portions: Vec<&[u8]> = portions.iter().map(Vec::as_slice).collect();
 
     warn!(
-        "Waiting {} and then spawning {} coroutines connected to {}.",
+        "waiting {} and then spawning {} coroutines connected to {}.",
         crate::cyan(format_duration(config.wait)),
         crate::cyan(config.connections),
         crate::cyan(format!(
@@ -62,7 +62,7 @@ pub fn run(config: &ArgsConfig) -> i32 {
             go!(scope, move || run_tester(&config.tester_config, portions));
         }
 
-        info!("All the coroutines have been spawned.");
+        info!("all the coroutines have been spawned.");
     });
 
     0
@@ -76,7 +76,7 @@ fn run_tester(config: &TesterConfig, portions: &[&[u8]]) {
 
         for &portion in portions {
             if start.elapsed() >= config.test_duration {
-                info!("The allotted time has expired. Exiting the coroutine...");
+                info!("the allotted time has expired. Exiting the coroutine...");
                 return;
             }
 
@@ -90,7 +90,7 @@ fn run_tester(config: &TesterConfig, portions: &[&[u8]]) {
                 }
                 SendPortionResult::Failed(err) => {
                     error!(
-                        "Sending {} byte(s) failed {} times >>> {}! Reconnecting the socket...",
+                        "sending {} byte(s) failed {} times >>> {}! Reconnecting the socket...",
                         crate::cyan(portion.len()),
                         crate::cyan(config.failed_count),
                         err,
@@ -102,7 +102,7 @@ fn run_tester(config: &TesterConfig, portions: &[&[u8]]) {
             coroutine::sleep(config.write_periodicity);
         }
 
-        info!("All the data portions have been sent. Reconnecting the socket...");
+        info!("all the data portions have been sent. Reconnecting the socket...");
     }
 }
 
@@ -123,7 +123,7 @@ fn send_portion(
                 Ok(_) => return SendPortionResult::Success,
                 Err(err) => {
                     error!(
-                        "Failed to send {} byte(s) >>> {}! Retrying the operation...",
+                        "failed to send {} byte(s) >>> {}! Retrying the operation...",
                         crate::cyan(portion.len()),
                         err
                     );

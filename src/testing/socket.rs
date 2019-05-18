@@ -43,14 +43,14 @@ impl FinshirSocket {
         loop {
             match FinshirSocket::try_connect(config) {
                 Ok(socket) => {
-                    info!("A new socket has been connected.");
-                    trace!("A recently connected socket >>> {:?}", socket);
+                    info!("a new socket has been connected.");
+                    trace!("a recently connected socket >>> {:?}", socket);
 
                     return socket;
                 }
                 Err(err) => {
                     error!(
-                        "Failed to connect a socket >>> {}! Retrying the operation after {}...",
+                        "failed to connect a socket >>> {}! Retrying the operation after {}...",
                         err,
                         crate::cyan(format_duration(config.connect_periodicity))
                     );
@@ -71,7 +71,7 @@ impl FinshirSocket {
         // doesn't help us
         socket
             .set_nodelay(true)
-            .expect("Cannot disable TCP_NODELAY");
+            .expect("cannot disable TCP_NODELAY");
         if let Some(val) = config.ip_ttl {
             socket.set_ttl(val).map_err(TryConnectError::IoError)?;
         }
@@ -86,7 +86,7 @@ impl FinshirSocket {
         Ok(if config.use_tls {
             FinshirSocket::Tls(
                 SslConnector::builder(SslMethod::tls())
-                    .expect("Couldn't connect to OpenSSL")
+                    .expect("couldn't connect to OpenSSL")
                     .build()
                     .connect(&config.receiver.host, socket)
                     .map_err(TryConnectError::HandshakeError)?,
@@ -169,7 +169,7 @@ mod tests {
 
     #[test]
     fn test_raw_tcp() {
-        let server = TcpListener::bind("0.0.0.0:0").expect("Cannot bind TcpListener");
+        let server = TcpListener::bind("0.0.0.0:0").expect("cannot bind TcpListener");
 
         let config = SocketConfig {
             receiver: ReceiverAddrs::from_str(&server.local_addr().unwrap().to_string()).unwrap(),
@@ -186,11 +186,11 @@ mod tests {
 
             let (mut conn, _) = server
                 .accept()
-                .expect("The server couldn't accept a connection");
+                .expect("the server couldn't accept a connection");
 
             conn.read_exact(&mut buff)
-                .expect("Cannot read from a client");
-            assert_eq!(buff.as_slice(), *DATA, "Received different data");
+                .expect("cannot read from a client");
+            assert_eq!(buff.as_slice(), *DATA, "received different data");
         });
 
         let mut client =
