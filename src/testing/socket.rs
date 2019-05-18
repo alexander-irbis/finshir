@@ -119,6 +119,7 @@ impl Display for TryConnectError {
 impl Error for TryConnectError {}
 
 impl Write for FinshirSocket {
+    #[inline]
     fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
         match self {
             FinshirSocket::RawTcp(s) => s.write(buf),
@@ -126,6 +127,7 @@ impl Write for FinshirSocket {
         }
     }
 
+    #[inline]
     fn flush(&mut self) -> io::Result<()> {
         match self {
             FinshirSocket::RawTcp(s) => s.flush(),
@@ -135,6 +137,7 @@ impl Write for FinshirSocket {
 }
 
 impl Read for FinshirSocket {
+    #[inline]
     fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
         match self {
             FinshirSocket::RawTcp(s) => s.read(buf),
