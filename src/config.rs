@@ -101,7 +101,7 @@ pub struct SocketConfig {
         long = "connect-timeout",
         takes_value = true,
         value_name = "TIME-SPAN",
-        default_value = "7secs",
+        default_value = "10secs",
         parse(try_from_str = "parse_duration")
     )]
     pub connect_timeout: Duration,
@@ -112,7 +112,7 @@ pub struct SocketConfig {
         long = "connect-periodicity",
         takes_value = true,
         value_name = "TIME-SPAN",
-        default_value = "5secs",
+        default_value = "7secs",
         parse(try_from_str = "parse_duration")
     )]
     pub connect_periodicity: Duration,
