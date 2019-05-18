@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="67208693-eb9a-4213-b448-bf3b8dccb2df" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gallery/ERRORS.png" beforeDir="false" afterPath="$PROJECT_DIR$/gallery/ERRORS.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gallery/INITIALISATION.png" beforeDir="false" afterPath="$PROJECT_DIR$/gallery/INITIALISATION.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gallery/VERBOSE.png" beforeDir="false" afterPath="$PROJECT_DIR$/gallery/VERBOSE.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/logging.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/logging.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/testing/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/mod.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/testing/portions.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/portions.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/testing/socket.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/testing/socket.rs" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -331,7 +334,7 @@
       <window_info id="Job Explorer" order="9" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969433" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4994664" weight="0.62227076" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4994664" visible="true" weight="0.62227076" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -339,7 +342,7 @@
       <window_info anchor="bottom" id="DB Execution Console" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50053364" side_tool="true" weight="0.18668123" />
       <window_info anchor="bottom" id="Console" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.4994664" visible="true" weight="0.55131006" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4994664" weight="0.59061134" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.32969433" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
