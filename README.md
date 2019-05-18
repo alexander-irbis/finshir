@@ -102,10 +102,10 @@ FLAGS:
 
 OPTIONS:
         --connect-periodicity <TIME-SPAN>    This option will be applied if a socket connection error occurs (the next
-                                             connection will be performed after this periodicity) [default: 10secs]
+                                             connection will be performed after this periodicity) [default: 5secs]
         --connect-timeout <TIME-SPAN>        Try connect a socket within a specified timeout. If a timeout is reached
                                              and a socket wasn't connected, the program will retry the operation later
-                                             [default: 10secs]
+                                             [default: 7secs]
     -c, --connections <POSITIVE-INTEGER>     A number of connections the program will handle simultaneously. This option
                                              also equals to a number of coroutines [default: 1000]
         --date-time-format <STRING>          A format for displaying local date and time in log messages. Type `man
