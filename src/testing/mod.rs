@@ -18,10 +18,11 @@
 
 use std::io::{self, Write};
 use std::num::NonZeroUsize;
-use std::time::Instant;
+use std::sync::Arc;
+use std::thread;
 
 use humantime::format_duration;
-use may::{self, coroutine, go};
+use may::{self, coroutine};
 
 use crate::config::{ArgsConfig, TesterConfig};
 use crate::testing::socket::FinshirSocket;
@@ -31,7 +32,9 @@ mod socket;
 
 /// This is the key function which accepts `ArgsConfig` and spawns all
 /// coroutines, returning 0 on success and 1 on failure.
-pub fn run(config: &ArgsConfig) -> i32 {
+pub fn run(config: ArgsConfig) -> i32 {
+    let test_duration = config.tester_config.test_duration;
+
     let portions = match portions::get_portions(config.portions_file.as_ref()) {
         Err(err) => {
             error!("failed to parse the JSON >>> {}!", err);
@@ -39,7 +42,6 @@ pub fn run(config: &ArgsConfig) -> i32 {
         }
         Ok(res) => res,
     };
-    let portions: Vec<&[u8]> = portions.iter().map(Vec::as_slice).collect();
 
     warn!(
         "waiting {} and then spawning {} coroutines connected to {}.",
@@ -53,33 +55,40 @@ pub fn run(config: &ArgsConfig) -> i32 {
     );
     std::thread::sleep(config.wait);
 
-    coroutine::scope(|scope| {
-        let portions = &portions;
-        let config = &config;
-        let iters = config.connections.get();
+    // Starting to spawn all the coroutines. Save the results into the vector to be
+    // able to cancel them in future.
+    let mut handles = Vec::with_capacity(config.connections.get());
 
-        for _ in 0..iters {
-            go!(scope, move || run_tester(&config.tester_config, portions));
-        }
+    let portions = Arc::new(portions);
+    let tester_config = Arc::new(config.tester_config);
 
-        info!("all the coroutines have been spawned.");
-    });
+    for _ in 0..config.connections.get() {
+        let portions = portions.clone();
+        let tester_config = tester_config.clone();
 
+        handles.push(go!(move || run_tester(tester_config, portions)));
+    }
+
+    // Wait exactly `test_duration` time and then starting to cancel the spawned
+    // coroutines located in `handles`.
+    info!(
+        "all the coroutines have been spawned. Waiting {} and then exit.",
+        crate::cyan(format_duration(test_duration))
+    );
+    thread::sleep(test_duration);
+
+    handles
+        .into_iter()
+        .for_each(|h| unsafe { h.coroutine().cancel() });
+    info!("all the coroutines have been cancelled due to the expired time.");
     0
 }
 
-fn run_tester(config: &TesterConfig, portions: &[&[u8]]) {
-    let start = Instant::now();
-
+fn run_tester(config: Arc<TesterConfig>, portions: Arc<Vec<Vec<u8>>>) {
     loop {
         let mut socket = FinshirSocket::connect(&config.socket_config);
 
-        for &portion in portions {
-            if start.elapsed() >= config.test_duration {
-                info!("the allotted time has expired. Exiting the coroutine...");
-                return;
-            }
-
+        for portion in portions.iter() {
             match send_portion(&mut socket, portion, config.failed_count) {
                 SendPortionResult::Success => {
                     info!(

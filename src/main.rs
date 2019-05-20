@@ -20,6 +20,8 @@
 extern crate lazy_static;
 #[macro_use]
 extern crate log;
+#[macro_use]
+extern crate may;
 
 use colored::{ColoredString, Colorize};
 use structopt::StructOpt;
@@ -43,7 +45,7 @@ fn main() {
     logging::setup_logging(&config.logging_config);
     trace!("{:?}", config);
 
-    std::process::exit(testing::run(&config));
+    std::process::exit(testing::run(config));
 }
 
 fn setup_ctrlc_handler() {
