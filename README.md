@@ -237,6 +237,7 @@ Finshir was developed as a means of testing stress resistance of web servers, an
  - https://news.ycombinator.com/item?id=19931443
  - https://www.reddit.com/r/rust/comments/bpor6b/finshir_a_coroutinesdriven_and_fully_customizable/
  - https://news.ycombinator.com/item?id=19962333
+ - https://www.reddit.com/r/rust/comments/bqyaok/finshir_v022_was_released_any_suggestions_to_low/
 
 ----------
 
