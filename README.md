@@ -71,7 +71,7 @@
 
 ## Demo
 <div align="center">
-  <img src="DEMO.gif">
+  <img src="DEMO.gif" width="300px">
 </div>
 
 ----------
