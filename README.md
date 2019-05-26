@@ -45,6 +45,7 @@
    - [Custom data portions](https://github.com/Gymmasssorla/finshir#custom-data-portions)
    - [Logging options](https://github.com/Gymmasssorla/finshir#logging-options)
    - [TLS support](https://github.com/Gymmasssorla/finshir#tls-support)
+   - [Generate a report](https://github.com/Gymmasssorla/finshir#generate-a-report)
  - [Gallery](https://github.com/Gymmasssorla/finshir#gallery)
    - [Initialisation](https://github.com/Gymmasssorla/finshir#initialisation)
    - [Errors](https://github.com/Gymmasssorla/finshir#errors)
@@ -187,7 +188,7 @@ By default, Finshir generates 100 empty spaces as data portions to send. You can
 
 ```bash
 # Send partial HTTP headers to Google using `--portions-file`
-$ finshir --receiver=google.com:80 --portions-file files/google.json
+$ finshir --receiver=google.com:80 --portions-file=files/google.json
 ```
 
 ### Logging options
@@ -204,8 +205,75 @@ Most of web servers today use the HTTPS protocol instead of HTTP, which is based
 ```bash
 # Connect to the Google's server through TLS on 443 port (HTTPS)
 $ finshir --receiver=google.com:443 --use-tls
-
 ```
+
+### Generate a report
+Report is a set of statistics variables like a total number of connections established, a total number of failed transmissions and so on. There is three options for this: `--xml-report`, `--json-report`, and `--text-report`:
+
+```bash
+# Test the Google's server and generate a JSON report at the end
+$ finshir --receiver=google.com:80 --json-report=report.json
+```
+
+What means "at the end"? Well, Finshir will generate a report for you either if allotted time expires or if you cancel the process by Ctrl-C. You can look at the report examples at the [`/files`](https://github.com/Gymmasssorla/finshir/tree/master/files) folder:
+
+([`files/report.json`](https://github.com/Gymmasssorla/finshir/blob/master/files/report.json))
+```json
+{
+  "connections": {
+    "failed": "0",
+    "successful": "141",
+    "total": "141"
+  },
+  "test-duration": "3s 21ms 289us 765ns",
+  "total-bytes-sent": "141",
+  "total-errors": "0",
+  "transmissions": {
+    "failed": "0",
+    "successful": "141",
+    "total": "141"
+  }
+}
+```
+
+([`files/report.xml`](https://github.com/Gymmasssorla/finshir/blob/master/files/report.xml))
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<finshir-report>
+  <test-duration>3s 6ms 698us 20ns</test-duration>
+  <total-bytes-sent>176</total-bytes-sent>
+  <total-errors>0</total-errors>
+  <connections>
+    <successful>176</successful>
+    <failed>0</failed>
+    <total>176</total>
+  </connections>
+  <transmissions>
+    <successful>176</successful>
+    <failed>0</failed>
+    <total>176</total>
+  </transmissions>
+</finshir-report>
+```
+
+([`files/report.txt`](https://github.com/Gymmasssorla/finshir/blob/master/files/report.txt))
+```
+*********************** FINSHIR REPORT ***********************
+Test duration:            3s 6ms 257us 296ns
+Total bytes sent:         168
+Total errors:             0
+
+Successful connections:   168
+Failed connections:       0
+Total connections:        168
+
+Successful transmissions: 168
+Failed transmissions:     0
+Total transmissions:      168
+**************************************************************
+```
+
+If none of the options above has been specified, Finshir prints a report right to your terminal. That is, you can just run a test, cancel it later, and see the results which you can easily save. Perfect!
 
 ----------
 
