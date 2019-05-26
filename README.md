@@ -70,7 +70,9 @@
 ----------
 
 ## Demo
-<img src="DEMO.gif">
+<div align="center">
+  <img src="DEMO.gif">
+</div>
 
 ----------
 
