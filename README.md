@@ -32,7 +32,7 @@
 ----------
 
 ## Contents
- - [Features](https://github.com/Gymmasssorla/finshir#features)
+ - [Advantages](https://github.com/Gymmasssorla/finshir#advantages)
  - [Installation](https://github.com/Gymmasssorla/finshir#installation)
    - [Building from crates.io](https://github.com/Gymmasssorla/finshir#building-from-cratesio)
    - [Building from sources](https://github.com/Gymmasssorla/finshir#building-from-sources)
@@ -58,7 +58,7 @@
 
 ----------
 
-## Features
+## Advantages
  - **Coroutines-driven.** Finshir uses [coroutines](https://en.wikipedia.org/wiki/Coroutine) (also called lightweight threads) instead of ordinary threads, which lets you open many more connections with fewer system resources.
 
  - **Generic.** Unlike other Low & Slow utilities, Finshir lets you transmit arbitrary data sets over the [TCP](https://en.m.wikipedia.org/wiki/Transmission_Control_Protocol) protocol. It may be partial HTTP headers, empty spaces, and so on.
