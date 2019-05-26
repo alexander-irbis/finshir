@@ -114,6 +114,8 @@ OPTIONS:
                                              remote web server [default: 5]
         --ip-ttl <UNSIGNED-INTEGER>          Specifies the IP_TTL value for all future sockets. Usually this value
                                              equals a number of routers that a packet can go through
+        --json-report <FILENAME>             A file to which a JSON report (also called a "total summary") will be
+                                             generated before exiting
     -f, --portions-file <LOCATION>           A file which consists of a custom JSON array of data portions, specified as
                                              strings.
                                              
@@ -123,6 +125,8 @@ OPTIONS:
                                              name) and a port number, separated by a colon
     -d, --test-duration <TIME-SPAN>          A whole test duration, after which all spawned coroutines will stop their
                                              work [default: 64years 64hours 64secs]
+        --text-report <FILENAME>             A file to which the program will generate a human-readable report (also
+                                             called a "total summary") before exiting
     -v, --verbosity <LEVEL>                  Enable one of the possible verbosity levels. The zero level doesn't print
                                              anything, and the last level prints everything.
                                              
@@ -135,9 +139,14 @@ OPTIONS:
                                              modify test intensity [default: 30secs]
         --write-timeout <TIME-SPAN>          If a timeout is reached and a data portion wasn't sent, the program will
                                              retry the operation later [default: 10secs]
+        --xml-report <FILENAME>              A file to which an XML report (also called a "total summary") will be
+                                             generated before exiting
 
 By default, Finshir generates 100 empty spaces as data portions. If you want to override this behaviour, consider using
 the `--portions-file` option.
+
+After test execution, you always receive a report (statistics about connections, transmissions, etc). If none of `--xml-
+report`, `--text-report`, `--json-report` is specified, your terminal will be used.
 
 For more information see <https://github.com/Gymmasssorla/finshir>.
 ```

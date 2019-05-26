@@ -30,11 +30,11 @@ use crate::config::ArgsConfig;
 
 mod config;
 mod logging;
+mod report;
+mod signal;
 mod testing;
 
 fn main() {
-    setup_ctrlc_handler();
-
     // Initialise OpenSSL
     openssl::init();
     openssl_probe::init_ssl_cert_env_vars();
@@ -46,16 +46,6 @@ fn main() {
     trace!("{:?}", config);
 
     std::process::exit(testing::run(config));
-}
-
-fn setup_ctrlc_handler() {
-    ctrlc::set_handler(move || {
-        info!("cancellation has been received. Exiting the process...");
-        std::process::exit(0);
-    })
-    .expect("Error while setting the Ctrl-C handler");
-
-    trace!("the Ctrl-C handler has been configured.");
 }
 
 fn title() {

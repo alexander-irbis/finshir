@@ -1,0 +1,15 @@
+{
+  "connections": {
+    "failed": "0",
+    "successful": "141",
+    "total": "141"
+  },
+  "test-duration": "3s 21ms 289us 765ns",
+  "total-bytes-sent": "141",
+  "total-errors": "0",
+  "transmissions": {
+    "failed": "0",
+    "successful": "141",
+    "total": "141"
+  }
+}

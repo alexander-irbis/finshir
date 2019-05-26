@@ -34,8 +34,11 @@ use structopt::StructOpt;
     author = "Temirkhan Myrzamadi <gymmasssorla@gmail.com>",
     about = "A coroutines-driven Low & Slow traffic sender, written in Rust",
     after_help = "By default, Finshir generates 100 empty spaces as data portions. If you want to \
-                  override this behaviour, consider using the `--portions-file` option.\n\nFor \
-                  more information see <https://github.com/Gymmasssorla/finshir>."
+                  override this behaviour, consider using the `--portions-file` option.\n\nAfter \
+                  test execution, you always receive a report (statistics about connections, \
+                  transmissions, etc). If none of `--xml-report`, `--text-report`, \
+                  `--json-report` is specified, your terminal will be used.\n\nFor more \
+                  information see <https://github.com/Gymmasssorla/finshir>."
 )]
 pub struct ArgsConfig {
     /// A waiting time span before test execution used to prevent a launch of an
@@ -80,6 +83,9 @@ pub struct ArgsConfig {
 
     #[structopt(flatten)]
     pub logging_config: LoggingConfig,
+
+    #[structopt(flatten)]
+    pub report_config: ReportConfig,
 }
 
 #[derive(StructOpt, Debug, Clone, Eq, PartialEq)]
@@ -206,6 +212,42 @@ pub struct LoggingConfig {
         parse(try_from_str = "parse_time_format")
     )]
     pub date_time_format: String,
+}
+
+#[derive(StructOpt, Debug, Clone, Eq, PartialEq)]
+pub struct ReportConfig {
+    /// A file to which a JSON report (also called a "total summary") will be
+    /// generated before exiting
+    #[structopt(
+        long = "json-report",
+        takes_value = true,
+        value_name = "FILENAME",
+        conflicts_with = "xml_report",
+        conflicts_with = "text-report"
+    )]
+    pub json_report: Option<PathBuf>,
+
+    /// A file to which an XML report (also called a "total summary") will be
+    /// generated before exiting
+    #[structopt(
+        long = "xml-report",
+        takes_value = true,
+        value_name = "FILENAME",
+        conflicts_with = "json_report",
+        conflicts_with = "text-report"
+    )]
+    pub xml_report: Option<PathBuf>,
+
+    /// A file to which the program will generate a human-readable report (also
+    /// called a "total summary") before exiting
+    #[structopt(
+        long = "text-report",
+        takes_value = true,
+        value_name = "FILENAME",
+        conflicts_with = "json_report",
+        conflicts_with = "xml-report"
+    )]
+    pub text_report: Option<PathBuf>,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]

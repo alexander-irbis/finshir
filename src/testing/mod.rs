@@ -25,8 +25,11 @@ use humantime::format_duration;
 use may::{self, coroutine};
 
 use crate::config::{ArgsConfig, TesterConfig};
+use crate::report::Update;
+use crate::signal;
 use crate::testing::socket::FinshirSocket;
 
+mod global;
 mod portions;
 mod socket;
 
@@ -43,17 +46,9 @@ pub fn run(config: ArgsConfig) -> i32 {
         Ok(res) => res,
     };
 
-    warn!(
-        "waiting {} and then spawning {} coroutines connected to {}.",
-        crate::cyan(format_duration(config.wait)),
-        crate::cyan(config.connections),
-        crate::cyan(format!(
-            "{}:{}",
-            &config.tester_config.socket_config.receiver.host,
-            &config.tester_config.socket_config.receiver.port
-        ))
-    );
-    std::thread::sleep(config.wait);
+    wait(&config);
+    global::init_report(&config.report_config);
+    override_handler();
 
     // Starting to spawn all the coroutines. Save the results into the vector to be
     // able to cancel them in future.
@@ -81,7 +76,38 @@ pub fn run(config: ArgsConfig) -> i32 {
         .into_iter()
         .for_each(|h| unsafe { h.coroutine().cancel() });
     info!("all the coroutines have been cancelled due to the expired time.");
+
+    global::generate_report().unwrap();
     0
+}
+
+fn wait(config: &ArgsConfig) {
+    warn!(
+        "waiting {} and then spawning {} coroutines connected to {}.",
+        crate::cyan(format_duration(config.wait)),
+        crate::cyan(config.connections),
+        crate::cyan(format!(
+            "{}:{}",
+            &config.tester_config.socket_config.receiver.host,
+            &config.tester_config.socket_config.receiver.port
+        ))
+    );
+    std::thread::sleep(config.wait);
+}
+
+/// Overrides a SIGINT handler in order to be able to print a report when a user
+/// has cancelled a process.
+fn override_handler() {
+    unsafe {
+        signal::override_handler(|| {
+            if let Err(err) = global::generate_report() {
+                error!("Failed to generate a report >>> {}!", err);
+            }
+            info!("cancellation has been received. Exiting the process...");
+
+            std::process::exit(0);
+        });
+    }
 }
 
 fn run_tester(config: Arc<TesterConfig>, portions: Arc<Vec<Vec<u8>>>) {
@@ -91,6 +117,8 @@ fn run_tester(config: Arc<TesterConfig>, portions: Arc<Vec<Vec<u8>>>) {
         for portion in portions.iter() {
             match send_portion(&mut socket, portion, config.failed_count) {
                 SendPortionResult::Success => {
+                    global::update_report(Update::TransmissionSucceed(portion.len()));
+
                     info!(
                         "{} byte(s) have been sent. Waiting {}...",
                         crate::cyan(portion.len()),
@@ -98,6 +126,8 @@ fn run_tester(config: Arc<TesterConfig>, portions: Arc<Vec<Vec<u8>>>) {
                     );
                 }
                 SendPortionResult::Failed(err) => {
+                    global::update_report(Update::TransmissionFailed);
+
                     error!(
                         "sending {} byte(s) failed {} times >>> {}! Reconnecting the socket...",
                         crate::cyan(portion.len()),

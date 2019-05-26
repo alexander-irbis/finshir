@@ -1,0 +1,13 @@
+*********************** FINSHIR REPORT ***********************
+Test duration:            3s 6ms 257us 296ns
+Total bytes sent:         168
+Total errors:             0
+
+Successful connections:   168
+Failed connections:       0
+Total connections:        168
+
+Successful transmissions: 168
+Failed transmissions:     0
+Total transmissions:      168
+**************************************************************

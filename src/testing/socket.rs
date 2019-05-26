@@ -29,6 +29,9 @@ use may::net::TcpStream as MaySocket;
 use openssl::ssl::{HandshakeError, SslConnector, SslMethod, SslStream};
 
 use crate::config::SocketConfig;
+use crate::report::Update;
+
+use super::global;
 
 pub type TryConnectResult = Result<FinshirSocket, TryConnectError>;
 
@@ -43,12 +46,14 @@ impl FinshirSocket {
         loop {
             match FinshirSocket::try_connect(config) {
                 Ok(socket) => {
+                    global::update_report(Update::ConnectionSucceed);
                     info!("a new socket has been connected.");
                     trace!("a recently connected socket >>> {:?}", socket);
 
                     return socket;
                 }
                 Err(err) => {
+                    global::update_report(Update::ConnectionFailed);
                     error!(
                         "failed to connect a socket >>> {}! Retrying the operation after {}...",
                         err,

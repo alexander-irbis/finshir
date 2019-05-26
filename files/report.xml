@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<finshir-report>
+  <test-duration>3s 6ms 698us 20ns</test-duration>
+  <total-bytes-sent>176</total-bytes-sent>
+  <total-errors>0</total-errors>
+  <connections>
+    <successful>176</successful>
+    <failed>0</failed>
+    <total>176</total>
+  </connections>
+  <transmissions>
+    <successful>176</successful>
+    <failed>0</failed>
+    <total>176</total>
+  </transmissions>
+</finshir-report>
