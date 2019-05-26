@@ -33,6 +33,7 @@
 
 ## Contents
  - [Advantages](https://github.com/Gymmasssorla/finshir#advantages)
+ - [Disdvantages](https://github.com/Gymmasssorla/finshir#disadvantages)
  - [Installation](https://github.com/Gymmasssorla/finshir#installation)
    - [Building from crates.io](https://github.com/Gymmasssorla/finshir#building-from-cratesio)
    - [Building from sources](https://github.com/Gymmasssorla/finshir#building-from-sources)
@@ -51,7 +52,6 @@
    - [Errors](https://github.com/Gymmasssorla/finshir#errors)
    - [Being verbose](https://github.com/Gymmasssorla/finshir#being-verbose)
  - [Contributing](https://github.com/Gymmasssorla/finshir#contributing)
- - [Target platform](https://github.com/Gymmasssorla/finshir#target-platform)
  - [Legal disclaimer](https://github.com/Gymmasssorla/finshir#legal-disclaimer)
  - [Project references](https://github.com/Gymmasssorla/finshir#project-references)
  - [Contacts](https://github.com/Gymmasssorla/finshir#contacts)
@@ -64,6 +64,11 @@
  - **Generic.** Unlike other Low & Slow utilities, Finshir lets you transmit arbitrary data sets over the [TCP](https://en.m.wikipedia.org/wiki/Transmission_Control_Protocol) protocol. It may be partial HTTP headers, empty spaces, and so on.
  
  - **Written in Rust.** How you can see, all the logic is written completely in [Rust](https://www.rust-lang.org/), which means that it leverages bare-metal performance and high-level safety (no SIGSEGV, SIGILL, and other "funny" stuff).
+
+----------
+
+## Disadvantages
+ - **Platform-dependent.** Like most of pentesting utilities, this project is developed, tested, and maintained for only UNIX-based systems. If you are a Windows user, you probably need a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or another computer with UNIX.
 
 ----------
 
@@ -294,11 +299,6 @@ If none of the options above has been specified, Finshir prints a report right t
 
 ## Contributing
 You are always welcome for any contribution to this project! But before you start, you should read [the appropriate document](https://github.com/Gymmasssorla/finshir/blob/master/CONTRIBUTING.md) to know about the preferred development process and the basic communication rules.
-
-----------
-
-## Target platform
-Like most of pentesting utilities, this project is developed, tested, and maintained for only UNIX-based systems. If you are a Windows user, you probably need a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or another computer with UNIX.
 
 ----------
 
