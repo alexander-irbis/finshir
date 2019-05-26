@@ -32,9 +32,9 @@
 ----------
 
 ## Contents
+ - [Demo](https://github.com/Gymmasssorla/finshir#demo)
  - [Advantages](https://github.com/Gymmasssorla/finshir#advantages)
  - [Disadvantages](https://github.com/Gymmasssorla/finshir#disadvantages)
- - [Demo](https://github.com/Gymmasssorla/finshir#demo)
  - [Installation](https://github.com/Gymmasssorla/finshir#installation)
    - [Building from crates.io](https://github.com/Gymmasssorla/finshir#building-from-cratesio)
    - [Building from sources](https://github.com/Gymmasssorla/finshir#building-from-sources)
@@ -55,6 +55,13 @@
 
 ----------
 
+## Demo
+<div align="center">
+  <img src="DEMO.gif">
+</div>
+
+----------
+
 ## Advantages
  - **Coroutines-driven.** Finshir uses [coroutines](https://en.wikipedia.org/wiki/Coroutine) (also called lightweight threads) instead of ordinary threads, which lets you open many more connections with fewer system resources.
 
@@ -66,13 +73,6 @@
 
 ## Disadvantages
  - **Platform-dependent.** Like most of pentesting utilities, this project is developed, tested, and maintained for only UNIX-based systems. If you are a Windows user, you probably need a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or another computer with UNIX.
-
-----------
-
-## Demo
-<div align="center">
-  <img src="DEMO.gif">
-</div>
 
 ----------
 
