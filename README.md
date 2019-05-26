@@ -57,7 +57,7 @@
 
 ## Demo
 <div align="center">
-  <img src="DEMO.gif">
+  <img src="https://github.com/Gymmasssorla/finshir/blob/master/DEMO.gif">
 </div>
 
 ----------
