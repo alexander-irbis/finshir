@@ -33,7 +33,8 @@
 
 ## Contents
  - [Advantages](https://github.com/Gymmasssorla/finshir#advantages)
- - [Disdvantages](https://github.com/Gymmasssorla/finshir#disadvantages)
+ - [Disadvantages](https://github.com/Gymmasssorla/finshir#disadvantages)
+ - [Demo](https://github.com/Gymmasssorla/finshir#demo)
  - [Installation](https://github.com/Gymmasssorla/finshir#installation)
    - [Building from crates.io](https://github.com/Gymmasssorla/finshir#building-from-cratesio)
    - [Building from sources](https://github.com/Gymmasssorla/finshir#building-from-sources)
@@ -47,10 +48,6 @@
    - [Logging options](https://github.com/Gymmasssorla/finshir#logging-options)
    - [TLS support](https://github.com/Gymmasssorla/finshir#tls-support)
    - [Generate a report](https://github.com/Gymmasssorla/finshir#generate-a-report)
- - [Gallery](https://github.com/Gymmasssorla/finshir#gallery)
-   - [Initialisation](https://github.com/Gymmasssorla/finshir#initialisation)
-   - [Errors](https://github.com/Gymmasssorla/finshir#errors)
-   - [Being verbose](https://github.com/Gymmasssorla/finshir#being-verbose)
  - [Contributing](https://github.com/Gymmasssorla/finshir#contributing)
  - [Legal disclaimer](https://github.com/Gymmasssorla/finshir#legal-disclaimer)
  - [Project references](https://github.com/Gymmasssorla/finshir#project-references)
@@ -69,6 +66,11 @@
 
 ## Disadvantages
  - **Platform-dependent.** Like most of pentesting utilities, this project is developed, tested, and maintained for only UNIX-based systems. If you are a Windows user, you probably need a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or another computer with UNIX.
+
+----------
+
+## Demo
+<img src="DEMO.gif">
 
 ----------
 
@@ -279,21 +281,6 @@ Total transmissions:      168
 ```
 
 If none of the options above has been specified, Finshir prints a report right to your terminal. That is, you can just run a test, cancel it later, and see the results which you can easily save. Perfect!
-
-----------
-
-## Gallery
-
-<div align="center">
-  <h3>Initialisation</h3>
-  <img src="gallery/INITIALISATION.png">
-  
-  <h3>Errors</h3>
-  <img src="gallery/ERRORS.png">
-  
-  <h3>Being verbose</h3>
-  <img src="gallery/VERBOSE.png">
-</div>
 
 ----------
 
