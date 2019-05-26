@@ -215,7 +215,7 @@ Report is a set of statistics variables like a total number of connections estab
 $ finshir --receiver=google.com:80 --json-report=report.json
 ```
 
-What means "at the end"? Well, Finshir will generate a report for you either if allotted time expires or if you cancel the process by Ctrl-C. You can look at the report examples at the [`/files`](https://github.com/Gymmasssorla/finshir/tree/master/files) folder:
+What means "at the end"? Well, Finshir will generate a report for you either if allotted time expires or if you cancel the process by Ctrl-C. You can look at the report examples in the [`/files`](https://github.com/Gymmasssorla/finshir/tree/master/files) folder:
 
 ([`files/report.json`](https://github.com/Gymmasssorla/finshir/blob/master/files/report.json))
 ```json
