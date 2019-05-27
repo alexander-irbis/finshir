@@ -72,7 +72,7 @@
 ----------
 
 ## Disadvantages
- - **Platform-dependent.** Like most of pentesting utilities, this project is developed, tested, and maintained for only UNIX-based systems. If you are a Windows user, you probably need a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or another computer with UNIX.
+ - **Platform-dependent.** Like most of pentesting utilities, this project is developed for only UNIX-based systems. If you are a Windows user, you probably need a [virtual machine](https://en.wikipedia.org/wiki/Virtual_machine) or another computer with UNIX.
 
 ----------
 
