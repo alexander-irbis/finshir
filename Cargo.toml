@@ -2,6 +2,7 @@
 name = "finshir"
 description = "A coroutines-driven Low & Slow traffic sender, written in Rust"
 repository = "https://github.com/Gymmasssorla/finshir"
+homepage = "https://github.com/Gymmasssorla/finshir"
 version = "0.3.1"
 authors = ["Temirkhan Myrzamadi <gymmasssorla@gmail.com>"]
 keywords = ["finshir", "ddos-attacks", "load-generator", "stress-testing", "pentest-tool"]
