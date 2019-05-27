@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg">
   </a>
   <a href="https://crates.io/crates/finshir">
-    <img src="https://img.shields.io/badge/crates.io-v0.3.1-orange.svg">
+    <img src="https://img.shields.io/badge/crates.io-v1.0.0-orange.svg">
   </a>
   <a href="https://semver.org">
     <img src="https://img.shields.io/badge/semver-follows-green.svg">
@@ -101,7 +101,7 @@ If you care about performance, please consider using the `RUSTFLAGS="-C target_c
 
 ## Options
 ```
-finshir 0.3.1
+finshir 1.0.0
 Temirkhan Myrzamadi <gymmasssorla@gmail.com>
 A coroutines-driven Low & Slow traffic sender, written in Rust
 
