@@ -28,6 +28,9 @@ serde_json = "1.0.39"
 serde = {version = "1.0.90", features = ["derive"] }
 treexml = "0.7.0"
 
+[badges]
+travis-ci = { repository = "Gymmasssorla/finshir", branch = "master" }
+maintenance = { status = "passively-maintained" }
+
 [profile.release]
-opt-level = 3
 lto = true
