@@ -39,7 +39,7 @@
    - [Building from crates.io](https://github.com/Gymmasssorla/finshir#building-from-cratesio)
    - [Building from sources](https://github.com/Gymmasssorla/finshir#building-from-sources)
    - [Pre-compiled binaries](https://github.com/Gymmasssorla/finshir#pre-compiled-binaries)
-   - [Use native CPU architecture](https://github.com/Gymmasssorla/finshir#use-native-cpu-architecture)
+   - [Use native CPU features](https://github.com/Gymmasssorla/finshir#use-native-cpu-features)
  - [Options](https://github.com/Gymmasssorla/finshir#options)
  - [Overview](https://github.com/Gymmasssorla/finshir#overview)
    - [Minimal command](https://github.com/Gymmasssorla/finshir#minimal-command)
@@ -94,7 +94,7 @@ $ cargo build --release
 ### Pre-compiled binaries
 The easiest way to run Finshir on your system is to download the pre-compiled binaries from the [existing releases](https://github.com/Gymmasssorla/finshir/releases), which doesn't require any external software (unlike the two previous approaches).
 
-### Use native CPU architecture
+### Use native CPU features
 If you care about performance, please consider using the `RUSTFLAGS="-C target_cpu=native"` environmental variable which tells the compiler to use accelerated instructions which are specific to your CPU.
 
 ----------
