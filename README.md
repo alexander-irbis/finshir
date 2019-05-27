@@ -231,16 +231,19 @@ What means "at the end"? Well, Finshir will generate a report for you either if 
 {
   "connections": {
     "failed": "0",
-    "successful": "141",
-    "total": "141"
+    "successful": "683",
+    "total": "683"
   },
-  "test-duration": "3s 21ms 289us 765ns",
-  "total-bytes-sent": "141",
+  "time": {
+    "test-duration": "9s 897ms 561us 209ns",
+    "test-start": "Mon, 27 May 2019 10:20:27 -0000"
+  },
+  "total-bytes-sent": "683",
   "total-errors": "0",
   "transmissions": {
     "failed": "0",
-    "successful": "141",
-    "total": "141"
+    "successful": "683",
+    "total": "683"
   }
 }
 ```
@@ -249,18 +252,21 @@ What means "at the end"? Well, Finshir will generate a report for you either if 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <finshir-report>
-  <test-duration>3s 6ms 698us 20ns</test-duration>
-  <total-bytes-sent>176</total-bytes-sent>
+  <total-bytes-sent>1534</total-bytes-sent>
   <total-errors>0</total-errors>
+  <time>
+    <test-start>Mon, 27 May 2019 10:18:57 -0000</test-start>
+    <test-duration>38s 807ms 453us 842ns</test-duration>
+  </time>
   <connections>
-    <successful>176</successful>
+    <successful>1000</successful>
     <failed>0</failed>
-    <total>176</total>
+    <total>1000</total>
   </connections>
   <transmissions>
-    <successful>176</successful>
+    <successful>1534</successful>
     <failed>0</failed>
-    <total>176</total>
+    <total>1534</total>
   </transmissions>
 </finshir-report>
 ```
@@ -268,17 +274,19 @@ What means "at the end"? Well, Finshir will generate a report for you either if 
 ([`files/report.txt`](https://github.com/Gymmasssorla/finshir/blob/master/files/report.txt))
 ```
 *********************** FINSHIR REPORT ***********************
-Test duration:            3s 6ms 257us 296ns
-Total bytes sent:         168
+Total bytes sent:         2000
 Total errors:             0
 
-Successful connections:   168
-Failed connections:       0
-Total connections:        168
+Test start:               Mon, 27 May 2019 10:21:02 -0000
+Test duration:            56s 29ms 777us 950ns
 
-Successful transmissions: 168
+Successful connections:   1000
+Failed connections:       0
+Total connections:        1000
+
+Successful transmissions: 2000
 Failed transmissions:     0
-Total transmissions:      168
+Total transmissions:      2000
 **************************************************************
 ```
 
