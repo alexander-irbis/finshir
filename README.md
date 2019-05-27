@@ -32,7 +32,7 @@
 ----------
 
 ## Contents
- - [Demo](https://github.com/Gymmasssorla/finshir#demo)
+ - [Demonstration](https://github.com/Gymmasssorla/finshir#demonstration)
  - [Advantages](https://github.com/Gymmasssorla/finshir#advantages)
  - [Disadvantages](https://github.com/Gymmasssorla/finshir#disadvantages)
  - [Installation](https://github.com/Gymmasssorla/finshir#installation)
@@ -55,7 +55,7 @@
 
 ----------
 
-## Demo
+## Demonstration
 <div align="center">
   <img src="https://github.com/Gymmasssorla/finshir/raw/master/DEMO.gif">
 </div>
