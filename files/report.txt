@@ -1,13 +1,15 @@
 *********************** FINSHIR REPORT ***********************
-Test duration:            3s 6ms 257us 296ns
-Total bytes sent:         168
+Total bytes sent:         2000
 Total errors:             0
 
-Successful connections:   168
-Failed connections:       0
-Total connections:        168
+Test start:               Mon, 27 May 2019 10:21:02 -0000
+Test duration:            56s 29ms 777us 950ns
 
-Successful transmissions: 168
+Successful connections:   1000
+Failed connections:       0
+Total connections:        1000
+
+Successful transmissions: 2000
 Failed transmissions:     0
-Total transmissions:      168
+Total transmissions:      2000
 **************************************************************

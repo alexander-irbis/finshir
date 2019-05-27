@@ -1,15 +1,18 @@
 {
   "connections": {
     "failed": "0",
-    "successful": "141",
-    "total": "141"
+    "successful": "683",
+    "total": "683"
   },
-  "test-duration": "3s 21ms 289us 765ns",
-  "total-bytes-sent": "141",
+  "time": {
+    "test-duration": "9s 897ms 561us 209ns",
+    "test-start": "Mon, 27 May 2019 10:20:27 -0000"
+  },
+  "total-bytes-sent": "683",
   "total-errors": "0",
   "transmissions": {
     "failed": "0",
-    "successful": "141",
-    "total": "141"
+    "successful": "683",
+    "total": "683"
   }
 }

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <finshir-report>
-  <test-duration>3s 6ms 698us 20ns</test-duration>
-  <total-bytes-sent>176</total-bytes-sent>
+  <total-bytes-sent>1534</total-bytes-sent>
   <total-errors>0</total-errors>
+  <time>
+    <test-start>Mon, 27 May 2019 10:18:57 -0000</test-start>
+    <test-duration>38s 807ms 453us 842ns</test-duration>
+  </time>
   <connections>
-    <successful>176</successful>
+    <successful>1000</successful>
     <failed>0</failed>
-    <total>176</total>
+    <total>1000</total>
   </connections>
   <transmissions>
-    <successful>176</successful>
+    <successful>1534</successful>
     <failed>0</failed>
-    <total>176</total>
+    <total>1534</total>
   </transmissions>
 </finshir-report>

@@ -47,7 +47,9 @@ enum ReportType {
 pub struct Report {
     report_type: ReportType,
 
-    beginning: Instant,
+    beginning: String,
+    instant: Instant,
+
     total_bytes_sent: usize,
     total_errors: usize,
 
@@ -75,7 +77,9 @@ impl Report {
                 }
             },
 
-            beginning: Instant::now(),
+            beginning: time::now_utc().rfc822z().to_string(),
+            instant: Instant::now(),
+
             total_bytes_sent: 0,
             total_errors: 0,
 
@@ -128,9 +132,13 @@ impl Report {
 
     fn gen_json(&self, filename: &PathBuf) -> io::Result<()> {
         let report = json!({
-            "test-duration": format_duration(self.beginning.elapsed()).to_string(),
             "total-bytes-sent": self.total_bytes_sent.to_string(),
             "total-errors": self.total_errors.to_string(),
+
+            "time": {
+                "test-start": &self.beginning,
+                "test-duration": format_duration(self.instant.elapsed()).to_string(),
+            },
 
             "connections": {
                 "successful": self.successful_connections.to_string(),
@@ -154,9 +162,12 @@ impl Report {
 
     fn gen_xml(&self, filename: &PathBuf) -> io::Result<()> {
         let report = Document::build(E::new("finshir-report").children(vec![
-            E::new("test-duration").text(format_duration(self.beginning.elapsed())),
             E::new("total-bytes-sent").text(self.total_bytes_sent.to_string()),
             E::new("total-errors").text(self.total_errors.to_string()),
+            E::new("time").children(vec![
+                E::new("test-start").text(&self.beginning),
+                E::new("test-duration").text(format_duration(self.instant.elapsed())),
+            ]),
             E::new("connections").children(vec![
                 E::new("successful").text(self.successful_connections.to_string()),
                 E::new("failed").text(self.failed_connections.to_string()),
@@ -182,9 +193,10 @@ impl Report {
             filename,
             format!(
                 "{title}\n\
-                 Test duration:            {duration}\n\
                  Total bytes sent:         {bytes}\n\
                  Total errors:             {errors}\n\n\
+                 Test start:               {start}\n\
+                 Test duration:            {duration}\n\n\
                  Successful connections:   {successful_conns}\n\
                  Failed connections:       {failed_conns}\n\
                  Total connections:        {total_conns}\n\n\
@@ -194,7 +206,8 @@ impl Report {
                  {end_title}\n",
                 title = "*********************** FINSHIR REPORT ***********************",
                 end_title = "**************************************************************",
-                duration = format_duration(self.beginning.elapsed()),
+                start = &self.beginning,
+                duration = format_duration(self.instant.elapsed()),
                 bytes = self.total_bytes_sent,
                 errors = self.total_errors,
                 successful_conns = self.successful_connections,
@@ -217,16 +230,18 @@ impl Report {
         #[rustfmt::skip]
         info!(
             "the statistics:\n\
-             \tTest duration:            {duration}\n\
              \tTotal bytes sent:         {bytes}\n\
              \tTotal errors:             {errors}\n\n\
+             \tTest start:               {start}\n\
+             \tTest duration:            {duration}\n\n\
              \tSuccessful connections:   {successful_conns}\n\
              \tFailed connections:       {failed_conns}\n\
              \tTotal connections:        {total_conns}\n\n\
              \tSuccessful transmissions: {successful_transmissions}\n\
              \tFailed transmissions:     {failed_transmissions}\n\
              \tTotal transmissions:      {total_transmissions}",
-            duration = crate::cyan(format_duration(self.beginning.elapsed())),
+            start = crate::cyan(&self.beginning),
+            duration = crate::cyan(format_duration(self.instant.elapsed())),
             bytes = crate::cyan(self.total_bytes_sent),
             errors = crate::cyan(self.total_errors),
             successful_conns = crate::cyan(self.successful_connections),
