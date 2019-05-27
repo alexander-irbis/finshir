@@ -26,7 +26,7 @@ use serde_json;
 
 pub type ReadPortionsResult = Result<Vec<Vec<u8>>, ReadPortionsError>;
 
-static EMPTY_SPACES_COUNT: usize = 100;
+const EMPTY_SPACES_COUNT: usize = 100;
 
 /// If `file` is some, this function reads data portions from the specified
 /// file. Otherwise, it generates empty spaces.
